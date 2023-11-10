@@ -1,7 +1,3 @@
-DROP DATABASE IF EXISTS BiblioSIO;
-
-CREATE DATABASE IF NOT EXISTS BiblioSIO;
-USE BiblioSIO;
 # -----------------------------------------------------------------------------
 #       TABLE : EXEMPLAIRE
 # -----------------------------------------------------------------------------
