@@ -1,19 +1,23 @@
-package revue;
+package bibliosio.back.revue;
 
-import exceptions.ResourceAlreadyExistsException;
-import exceptions.ResourceNotFoundException;
+import bibliosio.back.exceptions.ResourceAlreadyExistsException;
+import bibliosio.back.exceptions.ResourceNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Qualifier("jpaRevues")
 public class RevueJPAService implements RevueService
 {
-    private final RevueRepository revueRepository;
+    @Autowired
+    private RevueRepository revueRepository;
 
-    public RevueJPAService(RevueRepository revueRepository)
+    public RevueJPAService(List<Revue> revues)
     {
-        this.revueRepository = revueRepository;
+
     }
 
     @Override

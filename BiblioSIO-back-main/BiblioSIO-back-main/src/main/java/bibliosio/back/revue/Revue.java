@@ -1,4 +1,4 @@
-package revue;
+package bibliosio.back.revue;
 
 
 import jakarta.persistence.Entity;

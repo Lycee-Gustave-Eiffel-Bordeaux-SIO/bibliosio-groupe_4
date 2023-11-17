@@ -1,7 +1,7 @@
-package revue;
+package bibliosio.back.revue;
 
-import exceptions.ResourceAlreadyExistsException;
-import exceptions.ResourceNotFoundException;
+import bibliosio.back.exceptions.ResourceAlreadyExistsException;
+import bibliosio.back.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +25,8 @@ public class RevueServiceTest
             add(new Revue(2L, "Titre1"));
             add(new Revue(3L, "Titre1"));
         }};
-        revueService = new RevueLocalService(revues);
+
+        revueService = new RevueJPAService(revues);
     }
 
     @Test
@@ -63,7 +64,7 @@ public class RevueServiceTest
     @Test
     void whenUpdating_shouldModifyRevue() {
         Revue initial_revue = revues.get(2);
-        Revue new_revue = new Revue(initial_revue.getId(), "Titre updaté");
+        Revue new_revue = new Revue(initial_revue.getId(), "Titre updated");
 
         revueService.update(new_revue.getId(), new_revue);
         Revue updated_revue = revueService.getById(initial_revue.getId());
