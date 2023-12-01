@@ -12,7 +12,7 @@ public interface RevueService
 
     Revue create(Revue newRevue);
 
-    void update(Long id, Revue newRevue);
+    Revue update(Long id, Revue newRevue);
 
     void delete(Long id);
 }

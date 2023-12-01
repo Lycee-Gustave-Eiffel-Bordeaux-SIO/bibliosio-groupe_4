@@ -54,7 +54,7 @@ public class RevueJPAService implements RevueService
     }
 
     @Override
-    public void update(Long id, Revue newRevue) throws ResourceNotFoundException
+    public Revue update(Long id, Revue newRevue) throws ResourceNotFoundException
     {
         if(!revueRepository.existsById(id))
         {
@@ -62,7 +62,7 @@ public class RevueJPAService implements RevueService
         }
         else
         {
-            revueRepository.save(newRevue);
+                return revueRepository.save(newRevue);
         }
     }
 
