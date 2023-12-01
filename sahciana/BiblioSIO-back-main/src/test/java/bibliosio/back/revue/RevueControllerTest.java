@@ -1,10 +1,14 @@
 package bibliosio.back.revue;
 
 import bibliosio.back.exceptions.ExceptionHandlingAdvice;
+import bibliosio.back.exceptions.ResourceAlreadyExistsException;
 import bibliosio.back.exceptions.ResourceNotFoundException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -13,9 +17,17 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -63,15 +75,15 @@ public class RevueControllerTest
         ).andDo(print());
     }
 
-    /*@Test
+    @Test
     void whenGettingId7L_shouldReturnSame() throws Exception
     {
         mockMvc.perform(get("/revues/7")
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk()
-        ).andExpect(jsonPath("$.id", is(7))
-        ).andExpect(jsonPath("$.nom", is("lower"))
-        ).andExpect(jsonPath("$.fonction", is("REVUE"))
+        ).andExpect((ResultMatcher) jsonPath("$.id", is(7))
+        ).andExpect((ResultMatcher) jsonPath("$.nom", is("lower"))
+        ).andExpect((ResultMatcher) jsonPath("$.fonction", is("REVUE"))
         ).andReturn();
     }
 
@@ -101,6 +113,7 @@ public class RevueControllerTest
         verify(revueService).create(revue_received.capture());
         assertEquals(new_revue, revue_received.getValue());
     }
+
 
     @Test
     void whenCreatingWithExistingId_should404() throws Exception
@@ -141,6 +154,6 @@ public class RevueControllerTest
         ArgumentCaptor<Long> id_received = ArgumentCaptor.forClass(Long.class);
         Mockito.verify(revueService).delete(id_received.capture());
         assertEquals(id, id_received.getValue());
-    }*/
+    }
     
 }

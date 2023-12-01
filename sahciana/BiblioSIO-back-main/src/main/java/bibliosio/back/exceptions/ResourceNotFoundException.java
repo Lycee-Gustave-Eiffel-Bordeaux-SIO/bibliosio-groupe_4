@@ -1,4 +1,4 @@
-package exceptions;
+package bibliosio.back.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
 

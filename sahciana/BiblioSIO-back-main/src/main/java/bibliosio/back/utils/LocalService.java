@@ -1,6 +1,6 @@
-package utils;
+package bibliosio.back.utils;
 
-import exceptions.ResourceNotFoundException;
+import bibliosio.back.exceptions.ResourceNotFoundException;
 
 import java.beans.PropertyDescriptor;
 import java.util.ArrayList;

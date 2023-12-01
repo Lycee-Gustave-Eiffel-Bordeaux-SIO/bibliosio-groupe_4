@@ -1,4 +1,4 @@
-package exceptions;
+package bibliosio.back.exceptions;
 
 public class ResourceAlreadyExistsException extends RuntimeException {
     public ResourceAlreadyExistsException(String resourceName, Object identifier) {

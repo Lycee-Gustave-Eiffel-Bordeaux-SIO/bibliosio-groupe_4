@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RevueServiceTest 
 {
-    private RevueService revueService;
+    private RevueRepository revueRepository;
 
     private List<Revue> revues;
 
@@ -26,7 +26,7 @@ public class RevueServiceTest
             add(new Revue(3L, "Titre1"));
         }};
 
-        revueService = new RevueJPAService(revues);
+        revueRepository = new RevueJPAService(revues);
     }
 
     @Test
