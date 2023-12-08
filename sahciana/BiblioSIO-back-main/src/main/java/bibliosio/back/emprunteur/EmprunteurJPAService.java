@@ -1,7 +1,7 @@
-package geiffel.da4.bibliosio.emprunteur;
+package bibliosio.back.emprunteur;
 
-import geiffel.da4.bibliosio.exceptions.ResourceAlreadyExistsException;
-import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
+import bibliosio.back.exceptions.ResourceAlreadyExistsException;
+import bibliosio.back.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -11,12 +11,14 @@ import java.util.Optional;
 
 @Service
 @Qualifier("jpa")
-public class EmprunteurJPAService implements EmprunteurService{
+public class EmprunteurJPAService implements EmprunteurService
+{
 
     @Autowired
     private EmprunteurRepository emprunteurRepository;
 
-    public EmprunteurJPAService(EmprunteurRepository emprunteurRepository) {
+    public EmprunteurJPAService(EmprunteurRepository emprunteurRepository)
+    {
         this.emprunteurRepository=emprunteurRepository;
     }
 

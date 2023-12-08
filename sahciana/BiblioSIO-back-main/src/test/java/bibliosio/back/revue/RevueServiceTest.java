@@ -71,7 +71,6 @@ public class RevueServiceTest
         );
     }
 
-
     @Test
     void whenCreating_ShouldReturnSame()
     {
@@ -136,5 +135,4 @@ public class RevueServiceTest
 
         assertThrows(ResourceNotFoundException.class, ()->revueService.delete(id));
     }
-    
 }

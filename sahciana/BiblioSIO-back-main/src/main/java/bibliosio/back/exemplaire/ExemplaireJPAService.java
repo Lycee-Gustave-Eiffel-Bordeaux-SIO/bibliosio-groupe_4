@@ -1,8 +1,7 @@
-package geiffel.da4.bibliosio.exemplaire;
+package bibliosio.back.exemplaire;
 
-import geiffel.da4.bibliosio.emprunteur.Emprunteur;
-import geiffel.da4.bibliosio.exceptions.ResourceAlreadyExistsException;
-import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
+import bibliosio.back.exceptions.ResourceAlreadyExistsException;
+import bibliosio.back.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

@@ -41,7 +41,8 @@ public class RevueJPAService implements RevueService
     }
 
     @Override
-    public Revue create(Revue newRevue) throws ResourceAlreadyExistsException {
+    public Revue create(Revue newRevue) throws ResourceAlreadyExistsException
+    {
         Long id = newRevue.getId();
         if(revueRepository.existsById(id))
         {
@@ -78,6 +79,4 @@ public class RevueJPAService implements RevueService
             revueRepository.deleteById(id);
         }
     }
-
-
 }

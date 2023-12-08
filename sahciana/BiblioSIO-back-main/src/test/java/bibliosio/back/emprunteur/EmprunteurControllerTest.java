@@ -1,9 +1,9 @@
-package geiffel.da4.bibliosio.emprunteur;
+package bibliosio.back.emprunteur;
 
+import bibliosio.back.exceptions.ExceptionHandlingAdvice;
+import bibliosio.back.exceptions.ResourceAlreadyExistsException;
+import bibliosio.back.exceptions.ResourceNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import geiffel.da4.bibliosio.exceptions.ExceptionHandlingAdvice;
-import geiffel.da4.bibliosio.exceptions.ResourceAlreadyExistsException;
-import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

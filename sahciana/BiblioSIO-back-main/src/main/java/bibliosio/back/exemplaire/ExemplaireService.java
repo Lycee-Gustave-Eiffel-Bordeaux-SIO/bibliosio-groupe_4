@@ -1,12 +1,14 @@
-package geiffel.da4.bibliosio.exemplaire;
+package bibliosio.back.exemplaire;
 
-import geiffel.da4.bibliosio.emprunteur.Emprunteur;
-import geiffel.da4.bibliosio.exceptions.ResourceAlreadyExistsException;
-import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
+import bibliosio.back.exceptions.ResourceAlreadyExistsException;
+import bibliosio.back.exceptions.ResourceNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface ExemplaireService {
+@Service
+public interface ExemplaireService
+{
 
     List<Exemplaire> getAll();
 

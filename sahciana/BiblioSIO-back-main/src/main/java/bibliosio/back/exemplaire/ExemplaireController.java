@@ -1,6 +1,5 @@
-package geiffel.da4.bibliosio.exemplaire;
+package bibliosio.back.exemplaire;
 
-import geiffel.da4.bibliosio.emprunteur.Emprunteur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +27,7 @@ public class ExemplaireController {
 
     @GetMapping("/{id}")
     public Exemplaire getById(@PathVariable Long id) {
-        return ExemplaireService.getById(id);
+        return exemplaireService.getById(id);
     }
 
     @PostMapping("")

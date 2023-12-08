@@ -1,4 +1,4 @@
-package geiffel.da4.bibliosio.exemplaire;
+package bibliosio.back.exemplaire;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

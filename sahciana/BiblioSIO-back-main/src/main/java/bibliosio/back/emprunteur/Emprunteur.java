@@ -1,4 +1,4 @@
-package geiffel.da4.bibliosio.emprunteur;
+package bibliosio.back.emprunteur;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;

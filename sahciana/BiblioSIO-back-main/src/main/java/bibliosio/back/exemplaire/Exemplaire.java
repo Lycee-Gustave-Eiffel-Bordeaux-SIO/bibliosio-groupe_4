@@ -1,9 +1,9 @@
-package geiffel.da4.bibliosio.exemplaire;
+package bibliosio.back.exemplaire;
 
+import bibliosio.back.revue.Revue;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import geiffel.da4.bibliosio.revue.Revue;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -27,7 +27,7 @@ public class Exemplaire {
 
     public Exemplaire() {}
 
-    public Exemplaire(Long IDEX, String TITREEX, String DATEPARUEX, String STATUTEX,Revue revue) {
+    public Exemplaire(Long IDEX, String TITREEX, String DATEPARUEX, String STATUTEX, Revue revue) {
         this.IDEX = IDEX;
         this.TITREEX = TITREEX;
         this.DATEPARUEX = DATEPARUEX;

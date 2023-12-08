@@ -1,9 +1,8 @@
-package geiffel.da4.bibliosio.exemplaire;
+package bibliosio.back.exemplaire;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import geiffel.da4.bibliosio.emprunteur.Emprunteur;
 
 import java.io.IOException;
 

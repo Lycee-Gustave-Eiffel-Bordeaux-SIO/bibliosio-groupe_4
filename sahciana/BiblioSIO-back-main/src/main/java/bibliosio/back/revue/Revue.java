@@ -24,7 +24,8 @@ public class Revue
         this.titre = titre;
     }
 
-    public Revue() {
+    public Revue()
+    {
 
     }
 
@@ -53,7 +54,8 @@ public class Revue
     // Méthodes
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o)
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Revue revue = (Revue) o;
@@ -61,7 +63,8 @@ public class Revue
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return Objects.hash(id, titre);
     }
 }

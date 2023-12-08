@@ -1,7 +1,7 @@
-package geiffel.da4.bibliosio.emprunteur;
+package bibliosio.back.emprunteur;
 
-import geiffel.da4.bibliosio.exceptions.ResourceAlreadyExistsException;
-import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
+import bibliosio.back.exceptions.ResourceAlreadyExistsException;
+import bibliosio.back.exceptions.ResourceNotFoundException;
 
 import java.util.List;
 
