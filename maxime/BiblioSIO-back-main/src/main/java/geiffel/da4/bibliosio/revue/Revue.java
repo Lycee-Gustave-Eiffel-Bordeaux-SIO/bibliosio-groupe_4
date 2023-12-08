@@ -1,15 +1,9 @@
-package geiffel.da4.bibliosio.revue;
+package bibliosio.back.revue;
 
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import geiffel.da4.bibliosio.exemplaire.Exemplaire;
-import geiffel.da4.bibliosio.exemplaire.ExemplaireJSONSerializer;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -21,9 +15,6 @@ public class Revue
     @Id
     private Long id;
     private String titre;
-    @OneToMany(mappedBy = "revue")
-    @JsonSerialize(contentUsing = ExemplaireJSONSerializer.class)
-    private List<Exemplaire> exemplaires;
 
     // Constructeurs
 
@@ -31,15 +22,9 @@ public class Revue
     {
         this.id = id;
         this.titre = titre;
-        this.exemplaires = new ArrayList<>();
     }
 
     public Revue() {
-
-    }
-
-    public void addExemplaire(Exemplaire exemplaire){
-        this.exemplaires.add(exemplaire);
 
     }
 
@@ -63,14 +48,6 @@ public class Revue
     public void setTitre(String titre)
     {
         this.titre = titre;
-    }
-
-    public List<Exemplaire> getExemplaires() {
-        return exemplaires;
-    }
-
-    public void setExemplaires(List<Exemplaire> exemplaires) {
-        this.exemplaires = exemplaires;
     }
 
     // Méthodes
