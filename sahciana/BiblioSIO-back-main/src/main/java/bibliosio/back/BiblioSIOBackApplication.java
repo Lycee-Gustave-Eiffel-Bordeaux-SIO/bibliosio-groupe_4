@@ -34,6 +34,9 @@ public class BiblioSIOBackApplication
                 add(new Revue(1L, "Machin"));
                 add(new Revue(2L, "Chose"));
                 add(new Revue(3L, "Truc"));
+                add(new Revue(14L, "higher"));
+                add(new Revue(7L, "lower"));
+                add(new Revue(28L, "way higher"));
             }};
 
             revueRepository.saveAll(revues);

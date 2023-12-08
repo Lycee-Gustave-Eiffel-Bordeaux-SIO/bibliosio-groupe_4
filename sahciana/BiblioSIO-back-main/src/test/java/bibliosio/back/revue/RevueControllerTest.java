@@ -28,8 +28,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -69,6 +68,9 @@ public class RevueControllerTest
     @Test
     void whenGettingAll_shouldGet6_andBe200() throws Exception
     {
+        when(revueService.getAll()).thenReturn(revues);
+        assertEquals(6, revueService.getAll().size());
+
         mockMvc.perform(get("/revues")
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk()
@@ -84,18 +86,20 @@ public class RevueControllerTest
         revue.setTitre("lower");
 
         when(revueService.getById(7L)).thenReturn(revue);
+        assertEquals("lower", revue.getTitre());
 
         mockMvc.perform(get("/revues/7")
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk()
-        ).andExpect(jsonPath("$.id", is(7))
-        ).andExpect(jsonPath("$.titre", is("lower"))
+        ).andExpect(content().string("{\"id\":7,\"titre\":\"lower\"}")
         ).andReturn();
-    }/*
+    }
 
     @Test
     void whenGettingUnexistingId_should404() throws Exception
     {
+        doThrow(ResourceNotFoundException.class).when(revueService).getById(49L);
+
         mockMvc.perform(get("/revues/49")
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isNotFound()
@@ -107,6 +111,7 @@ public class RevueControllerTest
     {
         Revue new_revue = new Revue(89L, "nouveau");
         ArgumentCaptor<Revue> revue_received = ArgumentCaptor.forClass(Revue.class);
+
         when(revueService.create(any())).thenReturn(new_revue);
 
         mockMvc.perform(post("/revues")
@@ -125,6 +130,7 @@ public class RevueControllerTest
     void whenCreatingWithExistingId_should404() throws Exception
     {
         when(revueService.create(any())).thenThrow(ResourceAlreadyExistsException.class);
+
         mockMvc.perform(post("/revues")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(this.revues.get(2)))
@@ -159,7 +165,8 @@ public class RevueControllerTest
 
         ArgumentCaptor<Long> id_received = ArgumentCaptor.forClass(Long.class);
         Mockito.verify(revueService).delete(id_received.capture());
+
         assertEquals(id, id_received.getValue());
-    }*/
+    }
     
 }
