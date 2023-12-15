@@ -6,6 +6,8 @@ import bibliosio.back.article.Article;
 import bibliosio.back.article.ArticleJPAService;
 import bibliosio.back.article.ArticleRepository;
 import bibliosio.back.article.ArticleService;
+import bibliosio.back.exemplaire.Exemplaire;
+import bibliosio.back.revue.Revue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,14 +38,32 @@ public class ArticleServiceTest
 
     private List<Article> articles;
 
+    private List<Revue> revues;
+
+    private List<Exemplaire> exemplaires;
+
     @BeforeEach
     void setUp()
     {
+        revues = new ArrayList<>()
+        {{
+            add(new Revue(1L, "Titre1"));
+            add(new Revue(2L, "Titre1"));
+            add(new Revue(3L, "Titre1"));
+        }};
+
+        exemplaires = new ArrayList<>()
+        {{
+            add(new Exemplaire(1L,"titre1", "Décembre", "disponible", revues.get(0)));
+            add(new Exemplaire(2L,"titre2", "Janvier", "disponible", revues.get(1)));
+            add(new Exemplaire(3L,"titre3", "Février", "disponible", revues.get(2)));
+        }};
+
         articles = new ArrayList<>()
         {{
-            add(new Article());
-            add(new Article());
-            add(new Article());
+            add(new Article(1L, "titre1", "description1", revues.get(0),exemplaires.get(0)));
+            add(new Article(2L, "titre2", "description2", revues.get(1),exemplaires.get(1)));
+            add(new Article(3L, "titre3", "description3", revues.get(2),exemplaires.get(2)));
         }};
 
         Article article1 = articles.get(0);
@@ -75,11 +95,10 @@ public class ArticleServiceTest
         );
     }
 
-
     @Test
     void whenCreating_ShouldReturnSame()
     {
-        Article newArticle = new Article();
+        Article newArticle = new Article(4L, "titre4", "description4", revues.get(0),exemplaires.get(1));
 
         when(articleRepository.save(any(Article.class))).thenReturn(newArticle);
 
@@ -140,6 +159,4 @@ public class ArticleServiceTest
 
         assertThrows(ResourceNotFoundException.class, ()->articleService.delete(id));
     }
-
-
 }

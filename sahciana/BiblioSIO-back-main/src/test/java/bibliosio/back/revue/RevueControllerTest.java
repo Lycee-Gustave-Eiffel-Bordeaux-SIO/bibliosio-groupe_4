@@ -125,7 +125,6 @@ public class RevueControllerTest
         assertEquals(new_revue, revue_received.getValue());
     }
 
-
     @Test
     void whenCreatingWithExistingId_should404() throws Exception
     {
@@ -168,5 +167,4 @@ public class RevueControllerTest
 
         assertEquals(id, id_received.getValue());
     }
-    
 }
