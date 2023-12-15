@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import geiffel.da4.bibliosio.revue.Revue;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -14,7 +13,9 @@ import java.util.Objects;
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "IDEX")
 public class Exemplaire {
+
     @Id
+    @JsonProperty
     private Long IDEX;
 
     private String TITREEX;
@@ -27,7 +28,7 @@ public class Exemplaire {
 
     public Exemplaire() {}
 
-    public Exemplaire(Long IDEX, String TITREEX, String DATEPARUEX, String STATUTEX,Revue revue) {
+    public Exemplaire(Long IDEX, String TITREEX, String DATEPARUEX, String STATUTEX, Revue revue) {
         this.IDEX = IDEX;
         this.TITREEX = TITREEX;
         this.DATEPARUEX = DATEPARUEX;
