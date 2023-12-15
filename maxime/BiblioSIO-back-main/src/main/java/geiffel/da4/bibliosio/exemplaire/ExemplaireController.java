@@ -28,13 +28,25 @@ public class ExemplaireController {
 
     @GetMapping("/{id}")
     public Exemplaire getById(@PathVariable Long id) {
-        return ExemplaireService.getById(id);
+        return exemplaireService.getById(id);
     }
 
     @PostMapping("")
     public ResponseEntity createExemplaire(@RequestBody Exemplaire exemplaire) {
         Exemplaire created_exemplaire = exemplaireService.create(exemplaire);
-        return ResponseEntity.created(URI.create("/emprunteurs/"+created_exemplaire.getIDEX().toString())).build();
+        return ResponseEntity.created(URI.create("/exemplaires/"+created_exemplaire.getIDEX().toString())).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity updateExemplaire(@PathVariable Long id, @RequestBody Exemplaire exemplaire) {
+        exemplaireService.update(id, exemplaire);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteExemplaire(@PathVariable Long id) {
+        exemplaireService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

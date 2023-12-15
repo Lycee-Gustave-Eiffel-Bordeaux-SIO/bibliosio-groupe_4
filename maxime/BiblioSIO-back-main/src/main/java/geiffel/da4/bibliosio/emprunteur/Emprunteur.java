@@ -63,6 +63,10 @@ public class Emprunteur {
         this.MAILEMP = MAILEMP;
     }
 
+    public String getNOMPRENOM(){
+        return this.NOMEMP +" "+ this.PRENOMEMP;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

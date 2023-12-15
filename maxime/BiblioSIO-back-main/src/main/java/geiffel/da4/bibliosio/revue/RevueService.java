@@ -1,4 +1,4 @@
-package bibliosio.back.revue;
+package geiffel.da4.bibliosio.revue;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
