@@ -4,6 +4,7 @@ import bibliosio.back.exemplaire.Exemplaire;
 import bibliosio.back.exemplaire.ExemplaireJSONSerializer;
 import bibliosio.back.revue.Revue;
 import bibliosio.back.revue.RevueEmbeddedJSONSerializer;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -104,10 +105,15 @@ public class Article
     @Override
     public boolean equals(Object o)
     {
+        System.out.println("Checking equality with " + o + " in Article");
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Article article = (Article) o;
-        return Objects.equals(id, article.id) && Objects.equals(titre, article.titre) && Objects.equals(description, article.description) && Objects.equals(revue, article.revue) && Objects.equals(exemplaire, article.exemplaire);
+        return Objects.equals(id, article.id)
+                && Objects.equals(titre, article.titre)
+                && Objects.equals(description, article.description)
+                && Objects.equals(revue, article.revue)
+                && Objects.equals(exemplaire, article.exemplaire);
     }
 
     @Override

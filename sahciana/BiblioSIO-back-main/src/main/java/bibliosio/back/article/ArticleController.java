@@ -2,6 +2,7 @@ package bibliosio.back.article;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,7 @@ public class ArticleController
         return articleService.getById(id);
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity createArticle(@RequestBody Article article)
     {
         Article createdArticle = articleService.create(article);

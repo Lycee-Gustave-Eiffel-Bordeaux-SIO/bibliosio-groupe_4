@@ -36,8 +36,8 @@ public class ExemplaireJPAService implements ExemplaireService{
 
     @Override
     public Exemplaire create(Exemplaire newEx) throws ResourceAlreadyExistsException {
-        if(exemplaireRepository.existsById(newEx.getIDEX())){
-            throw new ResourceAlreadyExistsException("Exemplaire",newEx.getIDEX());
+        if(exemplaireRepository.existsById(newEx.getId())){
+            throw new ResourceAlreadyExistsException("Exemplaire",newEx.getId());
         }
         else {
             return exemplaireRepository.save(newEx);

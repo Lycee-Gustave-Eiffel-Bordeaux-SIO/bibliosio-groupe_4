@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,6 +22,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,11 +37,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-@ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = ArticleController.class)
+@WebMvcTest
 @ContextConfiguration(classes = ArticleController.class)
-@Import({ExceptionHandlingAdvice.class, ArticleController.class})
+@Import({ExceptionHandlingAdvice.class})
 public class ArticleControllerTest
 {
     @Autowired
@@ -130,7 +132,14 @@ public class ArticleControllerTest
         Article new_article = new Article(89L, "titre89", "description89", revues.get(2),exemplaires.get(2));
         ArgumentCaptor<Article> article_received = ArgumentCaptor.forClass(Article.class);
 
-        when(articleService.create(any())).thenReturn(new_article);
+        when(articleService.create(any())).thenAnswer(new Answer<Article>()
+        {
+            @Override
+            public Article answer(InvocationOnMock invocation) throws Throwable
+            {
+                return invocation.getArgument(0);
+            }
+        });
 
         mockMvc.perform(post("/articles")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -144,13 +153,17 @@ public class ArticleControllerTest
     }
 
     @Test
-    void whenCreatingWithExistingId_should404() throws Exception
+    void whenCreatingWithExistingId_should409() throws Exception
     {
         when(articleService.create(any())).thenThrow(ResourceAlreadyExistsException.class);
+        Article a = mock(Article.class);
+
+        String obj = new ObjectMapper().writeValueAsString(this.articles.get(0));
 
         mockMvc.perform(post("/articles")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(this.articles.get(2)))
+                        .contentType("application/json")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                .content(obj)
         ).andExpect(status().isConflict()
         ).andDo(print());
     }

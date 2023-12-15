@@ -56,10 +56,12 @@ public class Revue
     @Override
     public boolean equals(Object o)
     {
+        System.out.println("Checking equality with " + o + "in Revue");
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Revue revue = (Revue) o;
-        return Objects.equals(id, revue.id) && Objects.equals(titre, revue.titre);
+        return Objects.equals(id, revue.id)
+                && Objects.equals(titre, revue.titre);
     }
 
     @Override
