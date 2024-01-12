@@ -1,4 +1,4 @@
-package bibliosio.back.exceptions;
+package geiffel.da4.bibliosio.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
 

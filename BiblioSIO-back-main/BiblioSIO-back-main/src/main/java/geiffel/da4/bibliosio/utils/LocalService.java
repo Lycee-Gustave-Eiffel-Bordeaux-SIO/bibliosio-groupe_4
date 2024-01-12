@@ -1,11 +1,10 @@
-package bibliosio.back.utils;
+package geiffel.da4.bibliosio.utils;
 
-import bibliosio.back.exceptions.ResourceNotFoundException;
+import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
 
 import java.beans.PropertyDescriptor;
 import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  * Un service "local" est un service qui fournit des objets de type T1 stockés en dur dans une variable de type List.
@@ -95,6 +94,6 @@ public abstract class LocalService<T1, T2> {
      * @param index l'index d'un objet dans le service local
      * @param value un objet contenu dans le service local
      */
-    public record IndexAndValue<T1>(int index, T1 value) {}
+    protected record IndexAndValue<T1>(int index, T1 value) {}
 
 }

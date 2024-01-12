@@ -1,4 +1,4 @@
-package bibliosio.back.exceptions;
+package geiffel.da4.bibliosio.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

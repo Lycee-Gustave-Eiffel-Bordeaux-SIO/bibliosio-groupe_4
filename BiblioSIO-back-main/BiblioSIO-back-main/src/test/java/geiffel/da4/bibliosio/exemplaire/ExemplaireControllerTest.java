@@ -1,11 +1,10 @@
-package geiffel.da4.bibliosio.emprunt;
+package geiffel.da4.bibliosio.exemplaire;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import geiffel.da4.bibliosio.emprunteur.Emprunteur;
 import geiffel.da4.bibliosio.exceptions.ExceptionHandlingAdvice;
 import geiffel.da4.bibliosio.exceptions.ResourceAlreadyExistsException;
 import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
-import geiffel.da4.bibliosio.exemplaire.Exemplaire;
 import geiffel.da4.bibliosio.revue.Revue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,47 +36,40 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest
-@ContextConfiguration(classes = EmpruntController.class)
+@ContextConfiguration(classes = ExemplaireController.class)
 @Import(ExceptionHandlingAdvice.class)
-public class EmpruntControllerTest {
+public class ExemplaireControllerTest {
 
     @Autowired
     MockMvc mockMvc;
 
     @MockBean(name = "jpa")
-    EmpruntService empruntService;
+    ExemplaireService exemplaireService;
 
-    private List<Emprunt> emprunts;
-    private Emprunteur emprunteur1, emprunteur2;
-    private Exemplaire ex1, ex2;
+    private List<Exemplaire> exemplaires;
+
     @BeforeEach
     void setUp() {
-        emprunteur1 = Mockito.mock(Emprunteur.class);
-        emprunteur2 = Mockito.mock(Emprunteur.class);
-        ex1 = Mockito.mock(Exemplaire.class);
-        ex2 = Mockito.mock(Exemplaire.class);
+        Revue revue1 = new Revue(1L,"revue1");
+        Revue revue2 = new Revue(2L,"revue2");
+        Revue revue3 = new Revue(3L,"revue3");
+        exemplaires= new ArrayList<>(){{
+            add(new Exemplaire(1L,"titre1","01/01/2023","statut1",revue1));
+            add(new Exemplaire(2L,"titre2","02/02/2023","statut2",revue1));
+            add(new Exemplaire(3L,"titre3","03/03/2023","statut3",revue2));
+            add(new Exemplaire(14L,"titre4","04/04/2023","statut4",revue3));
+            add(new Exemplaire(7L,"titre5","05/05/2023","statut5",revue3));
+            add(new Exemplaire(28L,"titre6","06/06/2023","statut6",revue3));
 
-        Mockito.when(emprunteur1.getNUMEROEMP()).thenReturn(1L);
-        Mockito.when(emprunteur2.getNUMEROEMP()).thenReturn(2L);
-        Mockito.when(ex1.getIDEX()).thenReturn(1L);
-        Mockito.when(ex2.getIDEX()).thenReturn(2L);
-
-        emprunts = new ArrayList<>(){{
-            add(new Emprunt(1L,"01/01/2023","11/01/2023","statut1",emprunteur1,ex1));
-            add(new Emprunt(2L,"02/02/2023","12/02/2023","statut2",emprunteur2,ex2));
-            add(new Emprunt(3L,"03/03/2023","13/03/2023","statut3",emprunteur1,ex2));
-            add(new Emprunt(14L,"04/04/2023","14/04/2023","statut4",emprunteur1,ex1));
-            add(new Emprunt(7L,"05/05/2023","15/05/2023","statut5",emprunteur2,ex2));
-            add(new Emprunt(28L,"06/06/2023","16/06/2023","statut6",emprunteur2,ex1));
         }};
-        when(empruntService.getAll()).thenReturn(emprunts);
-        when(empruntService.getById(7L)).thenReturn(emprunts.get(4));
-        when(empruntService.getById(49L)).thenThrow(ResourceNotFoundException.class);
+        when(exemplaireService.getAll()).thenReturn(exemplaires);
+        when(exemplaireService.getById(7L)).thenReturn(exemplaires.get(4));
+        when(exemplaireService.getById(49L)).thenThrow(ResourceNotFoundException.class);
     }
 
     @Test
     void whenGettingAll_shouldGet6_andBe200() throws Exception {
-        mockMvc.perform(get("/emprunts")
+        mockMvc.perform(get("/exemplaires")
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk()
         ).andExpect(jsonPath("$", hasSize(6))
@@ -86,19 +78,19 @@ public class EmpruntControllerTest {
 
     @Test
     void whenGettingId7L_shouldReturnSame() throws Exception{
-        mockMvc.perform(get("/emprunts/7")
+        mockMvc.perform(get("/exemplaires/7")
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk()
-        ).andExpect(jsonPath("$.idemprunt", is(7))
-        ).andExpect(jsonPath("$.datedebut", is("05/05/2023"))
-        ).andExpect(jsonPath("$.dateretour", is("15/05/2023"))
-        ).andExpect(jsonPath("$.statut", is("statut5"))
+        ).andExpect(jsonPath("$.idex", is(7))
+        ).andExpect(jsonPath("$.titreex", is("titre5"))
+        ).andExpect(jsonPath("$.dateparuex", is("05/05/2023"))
+        ).andExpect(jsonPath("$.statutex", is("statut5"))
         ).andReturn();
     }
 
     @Test
     void whenGettingUnexistingId_should404() throws Exception {
-        mockMvc.perform(get("/emprunts/49")
+        mockMvc.perform(get("/exemplaires/49")
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isNotFound()
         ).andDo(print());
@@ -106,56 +98,58 @@ public class EmpruntControllerTest {
 
     @Test
     void whenCreatingNew_shouldReturnLink_andShouldBeStatusCreated() throws Exception {
-        Emprunt new_emp = new Emprunt(89L , "dated", "datef","statut", emprunteur1,ex1);
-        ArgumentCaptor<Emprunt> emp_received = ArgumentCaptor.forClass(Emprunt.class);
-        when(empruntService.create(any())).thenReturn(new_emp);
+        Revue revue = new Revue(4L,"titre");
+        Exemplaire new_ex = new Exemplaire(89L, "test", "test","test",revue);
+        ArgumentCaptor<Exemplaire> ex_received = ArgumentCaptor.forClass(Exemplaire.class);
+        when(exemplaireService.create(any())).thenReturn(new_ex);
 
-        mockMvc.perform(post("/emprunts")
+        mockMvc.perform(post("/exemplaires")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(new_emp))
+                .content(new ObjectMapper().writeValueAsString(new_ex))
         ).andExpect(status().isCreated()
-        ).andExpect(header().string("Location", "/emprunts/"+new_emp.getIDEMPRUNT())
+        ).andExpect(header().string("Location", "/exemplaires/"+new_ex.getIDEX())
         ).andDo(print());
 
-        verify(empruntService).create(emp_received.capture());
-        assertEquals(new_emp, emp_received.getValue());
+        verify(exemplaireService).create(ex_received.capture());
+        assertEquals(new_ex, ex_received.getValue());
     }
 
     @Test
     void whenCreatingWithExistingId_should404() throws Exception {
-        when(empruntService.create(any())).thenThrow(ResourceAlreadyExistsException.class);
-        mockMvc.perform(post("/emprunts")
+        when(exemplaireService.create(any())).thenThrow(ResourceAlreadyExistsException.class);
+        mockMvc.perform(post("/exemplaires")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(this.emprunts.get(2)))
+                .content(new ObjectMapper().writeValueAsString(this.exemplaires.get(2)))
         ).andExpect(status().isConflict()
         ).andDo(print());
     }
 
     @Test
     void whenUpdating_shouldReceiveEmprunteurToUpdate_andReturnNoContent() throws Exception {
-        Emprunt initial_emp = emprunts.get(1);
-        Emprunt updated_emp = new Emprunt(initial_emp.getIDEMPRUNT() , "dated", "datef","statut", emprunteur1,ex1);
-        ArgumentCaptor<Emprunt> emp_received = ArgumentCaptor.forClass(Emprunt.class);
+        Revue revue = new Revue(4L,"titre");
+        Exemplaire initial_ex = exemplaires.get(1);
+        Exemplaire updated_ex = new Exemplaire(initial_ex.getIDEX(), "updated","updated", "updated",revue);
+        ArgumentCaptor<Exemplaire> ex_received = ArgumentCaptor.forClass(Exemplaire.class);
 
-        mockMvc.perform(put("/emprunts/"+initial_emp.getIDEMPRUNT())
+        mockMvc.perform(put("/exemplaires/"+initial_ex.getIDEX())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(updated_emp))
+                .content(new ObjectMapper().writeValueAsString(updated_ex))
         ).andExpect(status().isNoContent());
 
-        verify(empruntService).update(anyLong(), emp_received.capture());
-        assertEquals(updated_emp, emp_received.getValue());
+        verify(exemplaireService).update(anyLong(), ex_received.capture());
+        assertEquals(updated_ex, ex_received.getValue());
     }
 
     @Test
     void whenDeletingExisting_shouldCallServiceWithCorrectId_andSendNoContent() throws Exception {
         Long id = 28L;
 
-        mockMvc.perform(delete("/emprunts/"+id)
+        mockMvc.perform(delete("/exemplaires/"+id)
         ).andExpect(status().isNoContent()
         ).andDo(print());
 
         ArgumentCaptor<Long> id_received = ArgumentCaptor.forClass(Long.class);
-        Mockito.verify(empruntService).delete(id_received.capture());
+        Mockito.verify(exemplaireService).delete(id_received.capture());
         assertEquals(id, id_received.getValue());
     }
 }
