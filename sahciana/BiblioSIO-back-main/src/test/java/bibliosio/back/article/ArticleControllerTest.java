@@ -132,14 +132,7 @@ public class ArticleControllerTest
         Article new_article = new Article(89L, "titre89", "description89", revues.get(2),exemplaires.get(2));
         ArgumentCaptor<Article> article_received = ArgumentCaptor.forClass(Article.class);
 
-        when(articleService.create(any())).thenAnswer(new Answer<Article>()
-        {
-            @Override
-            public Article answer(InvocationOnMock invocation) throws Throwable
-            {
-                return invocation.getArgument(0);
-            }
-        });
+        when(articleService.create(any())).thenReturn(new_article);
 
         mockMvc.perform(post("/articles")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -147,7 +140,6 @@ public class ArticleControllerTest
         ).andExpect(status().isCreated()
         ).andExpect(header().string("Location", "/articles/"+new_article.getId())
         ).andDo(print());
-
         verify(articleService).create(article_received.capture());
         assertEquals(new_article, article_received.getValue());
     }
@@ -172,7 +164,7 @@ public class ArticleControllerTest
     void whenUpdating_shouldReceiveArticleToUpdate_andReturnNoContent() throws Exception
     {
         Article initial_article = articles.get(1);
-        Article updated_article = new Article(initial_article.getId(), "titre updated", initial_article.getDescription(), initial_article.getRevue(), initial_article.getExemplaire());
+        Article updated_article = new Article(initial_article.getId(), "titre updated", "updated description", initial_article.getRevue(), initial_article.getExemplaire());
         ArgumentCaptor<Article> article_received = ArgumentCaptor.forClass(Article.class);
 
         mockMvc.perform(put("/articles/"+initial_article.getId())

@@ -53,20 +53,17 @@ public class Revue
 
     // Méthodes
 
+
     @Override
-    public boolean equals(Object o)
-    {
-        System.out.println("Checking equality with " + o + "in Revue");
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Revue revue = (Revue) o;
-        return Objects.equals(id, revue.id)
-                && Objects.equals(titre, revue.titre);
+        return Objects.equals(id, revue.id) && Objects.equals(titre, revue.titre);
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(id, titre);
     }
 }

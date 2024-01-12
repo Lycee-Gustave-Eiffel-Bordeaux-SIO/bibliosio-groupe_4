@@ -19,4 +19,5 @@ public class ArticleEmbeddedJSONSerializer extends JsonSerializer<Article>
         gen.writeStringField("url", "/articles/"+article.getId());
         gen.writeEndObject();
     }
+
 }

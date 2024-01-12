@@ -102,23 +102,17 @@ public class Article
 
     // Méthodes
 
+
     @Override
-    public boolean equals(Object o)
-    {
-        System.out.println("Checking equality with " + o + " in Article");
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Article article = (Article) o;
-        return Objects.equals(id, article.id)
-                && Objects.equals(titre, article.titre)
-                && Objects.equals(description, article.description)
-                && Objects.equals(revue, article.revue)
-                && Objects.equals(exemplaire, article.exemplaire);
+        return Objects.equals(id, article.id) && Objects.equals(titre, article.titre) && Objects.equals(description, article.description) && Objects.equals(revue, article.revue) && Objects.equals(exemplaire, article.exemplaire);
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(id, titre, description, revue, exemplaire);
     }
 }

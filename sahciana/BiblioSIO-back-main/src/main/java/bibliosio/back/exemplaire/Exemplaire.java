@@ -70,22 +70,15 @@ public class Exemplaire {
 
 
     @Override
-    public boolean equals(Object o)
-    {
-        System.out.println("Checking equality with " + o + " in Exemplaire");
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Exemplaire that = (Exemplaire) o;
-        return Objects.equals(id, that.id)
-                && Objects.equals(TITREEX, that.TITREEX)
-                && Objects.equals(DATEPARUEX, that.DATEPARUEX)
-                && Objects.equals(STATUTEX, that.STATUTEX)
-                && Objects.equals(revue, that.revue);
+        return Objects.equals(id, that.id) && Objects.equals(TITREEX, that.TITREEX) && Objects.equals(DATEPARUEX, that.DATEPARUEX) && Objects.equals(STATUTEX, that.STATUTEX) && Objects.equals(revue, that.revue);
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(id, TITREEX, DATEPARUEX, STATUTEX, revue);
     }
 }
