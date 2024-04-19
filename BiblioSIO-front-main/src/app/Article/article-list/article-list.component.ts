@@ -9,15 +9,19 @@ import {Router} from "@angular/router";
   styleUrls: ['./article-list.component.css']
 })
 export class ArticleListComponent {
-  articles: Article[]
+  articles!: Article[];
 
   constructor(
       private articleService: ArticleService,
       private router: Router
   ) {
-    this.articles = []
-    articleService.get()
-        .subscribe((articles)=>this.articles=articles)
+    this.getAllArticles();
+  }
+
+  public getAllArticles(){
+    this.articleService.getAllArticles().subscribe((articles) => {
+      this.articles = articles;
+    });
   }
 
   openArticleDetails(article: Article) {

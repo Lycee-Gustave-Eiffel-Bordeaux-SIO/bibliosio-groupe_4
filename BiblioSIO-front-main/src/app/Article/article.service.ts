@@ -7,5 +7,9 @@ import {Article} from "./Article";
 })
 export class ArticleService extends GenericService<Article> {
   protected override className = "Article"
-  protected override url = "http://localhost:8080/articles/"
+  protected override url = "http://localhost:8080/articles"
+
+  getAllArticles() {
+    return this.http.get<Article[]>(this.url);
+  }
 }

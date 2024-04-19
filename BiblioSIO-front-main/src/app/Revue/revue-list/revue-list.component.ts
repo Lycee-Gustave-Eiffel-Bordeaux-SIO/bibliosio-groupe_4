@@ -10,15 +10,19 @@ import {Router} from "@angular/router";
   styleUrls: ['./revue-list.component.css']
 })
 export class RevueListComponent {
-  revues: Revue[]
+  revues!: Revue[];
 
   constructor(
       private revueService: RevueService,
       private router: Router
   ) {
-    this.revues = []
-    revueService.get()
-        .subscribe((revues)=>this.revues=revues)
+    this.getAllRevues();
+  }
+
+  public getAllRevues(){
+    this.revueService.getAllRevue().subscribe((revues) => {
+      this.revues = revues;
+    });
   }
 
   openRevueDetails(revue: Revue) {

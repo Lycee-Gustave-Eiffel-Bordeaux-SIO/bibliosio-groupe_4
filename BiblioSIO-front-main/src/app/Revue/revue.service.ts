@@ -7,5 +7,12 @@ import {Revue} from "./Revue";
 })
 export class RevueService extends GenericService<Revue> {
   protected override className = "Revue"
-  protected override url = "http://localhost:8080/revues/"
+  protected override url = "http://localhost:8080/revues"
+
+
+  getAllRevue() {
+    return this.http.get<Revue[]>(this.url);
+  }
+
+
 }
