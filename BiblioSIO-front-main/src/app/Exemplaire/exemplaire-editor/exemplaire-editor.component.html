@@ -4,7 +4,8 @@
         <option *ngFor="let revue of revues$ | async" [ngValue]="revue">{{revue.titre}}</option>
     </select>
     <label for="titre">Titre :</label><input [(ngModel)]="exemplaire.titre" id="titre" name="titre">
-    <label for="dateParution">Date de parution :</label><input [(ngModel)]="exemplaire.dateParution" id="dateParution" name="dateParution">
-    <label for="statut">Statut :</label><input type="checkbox" [(ngModel)]="exemplaire.statut" id="statut" name="statut" checked>
+    <label for="moisParution">Mois de parution :</label><input [(ngModel)]="exemplaire.moisParution" id="moisParution" name="moisParution">
+  <label for="anneeParution">Année de parution :</label><input [(ngModel)]="exemplaire.anneeParution" id="anneeParution" name="anneeParution">
+  <label for="statut">Statut :</label><input type="checkbox" [(ngModel)]="exemplaire.statut" id="statut" name="statut" checked>
     <button type="submit">Envoyer</button><button type="reset">Reset</button>
 </form>

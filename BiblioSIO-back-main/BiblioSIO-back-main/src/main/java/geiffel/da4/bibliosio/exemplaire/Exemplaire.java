@@ -3,10 +3,12 @@ package geiffel.da4.bibliosio.exemplaire;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import geiffel.da4.bibliosio.article.Article;
 import geiffel.da4.bibliosio.revue.Revue;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Exemplaire {
@@ -17,7 +19,9 @@ public class Exemplaire {
 
     private String titre;
 
-    private String dateparution;
+    private String anneeParution;
+
+    private String moisParution;
 
     private String statut;
 
@@ -26,10 +30,11 @@ public class Exemplaire {
 
     public Exemplaire() {}
 
-    public Exemplaire(Long id, String titre, String dateparution, String statut, Revue revue) {
+    public Exemplaire(Long id, String titre, String anneeParution, String moisParution, String statut, Revue revue) {
         this.id = id;
         this.titre = titre;
-        this.dateparution = dateparution;
+        this.anneeParution = anneeParution;
+        this.moisParution = moisParution;
         this.statut = statut;
         this.revue = revue;
     }
@@ -50,12 +55,20 @@ public class Exemplaire {
         this.titre = titre;
     }
 
-    public String getDateparution() {
-        return dateparution;
+    public String getAnneeParution() {
+        return anneeParution;
     }
 
-    public void setDateparution(String dateparution) {
-        this.dateparution = dateparution;
+    public void setAnneeParution(String anneeParution) {
+        this.anneeParution = anneeParution;
+    }
+
+    public String getMoisParution() {
+        return moisParution;
+    }
+
+    public void setMoisParution(String moisParution) {
+        this.moisParution = moisParution;
     }
 
     public String getStatut() {
@@ -79,11 +92,11 @@ public class Exemplaire {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Exemplaire that = (Exemplaire) o;
-        return Objects.equals(id, that.id) && Objects.equals(titre, that.titre) && Objects.equals(dateparution, that.dateparution) && Objects.equals(statut, that.statut) && Objects.equals(revue, that.revue);
+        return Objects.equals(id, that.id) && Objects.equals(titre, that.titre) && Objects.equals(anneeParution, that.anneeParution) && Objects.equals(moisParution, that.moisParution) && Objects.equals(statut, that.statut) && Objects.equals(revue, that.revue);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, titre, dateparution, statut, revue);
+        return Objects.hash(id, titre, anneeParution, moisParution, statut, revue);
     }
 }

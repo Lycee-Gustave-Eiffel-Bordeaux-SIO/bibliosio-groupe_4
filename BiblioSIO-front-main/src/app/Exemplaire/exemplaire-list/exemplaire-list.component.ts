@@ -13,7 +13,7 @@ export class ExemplaireListComponent {
   selectedExemplaire!: Exemplaire;
 
   constructor(
-      private exemplaireService: ExemplaireService,
+      public exemplaireService: ExemplaireService,
       private router: Router
   ) {
     this.getAllExemplaires();
@@ -54,9 +54,4 @@ export class ExemplaireListComponent {
         {state: {creating: true}})
   }
 
-  sortNum() {
-    this.exemplaires.sort(function (a: any, b: any) {
-      return a.id - b.id;
-    });
-  }
 }

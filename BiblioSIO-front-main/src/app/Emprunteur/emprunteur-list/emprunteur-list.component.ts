@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {EmprunteurService} from "../emprunteur.service";
-import {Emprunteur} from "../Emprunteur";
+import {Classe, Emprunteur} from "../Emprunteur";
 import {Router} from "@angular/router";
 
 @Component({
@@ -11,11 +11,15 @@ import {Router} from "@angular/router";
 export class EmprunteurListComponent {
   emprunteurs!: Emprunteur[];
   selectedEmprunteur!: Emprunteur;
+  ClasseArray!: Classe[];
+  classeSelectionnee!: Classe;
 
   constructor(
-    private emprunteurService: EmprunteurService,
+    public emprunteurService: EmprunteurService,
     private router: Router
   ) {
+    this.ClasseArray = Object.values(Classe);
+    this.classeSelectionnee = this.ClasseArray[0];
     this.getAllEmprunteurs();
   }
 
@@ -53,4 +57,6 @@ export class EmprunteurListComponent {
     this.router.navigate(['/emprunteurs/edit'],
         {state: {creating: true}})
   }
+
+
 }

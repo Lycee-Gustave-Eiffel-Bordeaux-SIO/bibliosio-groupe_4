@@ -46,4 +46,10 @@ export class ExemplaireDetailsComponent implements OnInit {
     }
     return "Disponible"
   }
+
+  gotoRevue(id: Number | undefined) {
+    if(id){
+      this.router.navigate(["/revues/" + id]);
+    }
+  }
 }

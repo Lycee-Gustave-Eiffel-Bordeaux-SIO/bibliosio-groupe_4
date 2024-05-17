@@ -1,4 +1,18 @@
 <h1>Liste des emprunteurs : </h1>
+<button class="sortClasseASC" (click)="emprunteurService.trierParClasseCroissant(emprunteurs)">Tri par classe - ASC</button>
+<button class="sortClasseDESC" (click)="emprunteurService.trierParClasseDecroissant(emprunteurs)">Tri par classe - DESC</button>
+<button class="sortFamilyNameASC" (click)="emprunteurService.trierParNomEmprunteurCroissant(emprunteurs)">Tri par Nom de famille - ASC</button>
+<button class="sortFamilyNameDESC" (click)="emprunteurService.trierParNomEmprunteurDecroissant(emprunteurs)">Tri par Nom de famille - DESC</button>
+<br>
+
+<select [(ngModel)]="classeSelectionnee">
+  <option *ngFor="let classe of ClasseArray" [value]="classe">{{classe}}</option>
+</select>
+
+<button class="sortFNbyClassASC" (click)="emprunteurService.trierNomsFamillesCroissantClasseDonnee(emprunteurs, classeSelectionnee )">Tri par Nom et classe - ASC</button>
+<button class="sortFNbyClassDESC" (click)="emprunteurService.trierNomsFamillesDecroissantClasseDonnee(emprunteurs, classeSelectionnee)">Tri par Nom et classe - DESC</button>
+<br>
+
 <app-emprunteur-details *ngFor="let emprunteur of emprunteurs"
                         (click)="openEmprunteurDetails(emprunteur)"
                         [emprunteur]="emprunteur"

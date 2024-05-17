@@ -1,6 +1,8 @@
 <h1>Liste des exemplaires : </h1>
-<button class="sortNum" (click)="sortNum()">Tri par numéro</button>
-<button class="sortAnnee">Tri par année</button>
+<button class="sortAnneeASC" (click)="exemplaireService.trierDatesCroissant(exemplaires)">Tri par année - ASC</button>
+<button class="sortAnneeDESC" (click)="exemplaireService.trierDatesDecroissant(exemplaires)">Tri par année - DESC</button>
+<button class="sortNumASC" (click)="exemplaireService.trierIdsCroissant(exemplaires)">Tri par numéro - ASC</button>
+<button class="sortNumDESC" (click)="exemplaireService.trierIdsDecroissant(exemplaires)">Tri par numéro - DESC</button>
 <br>
 
 <app-exemplaire-details

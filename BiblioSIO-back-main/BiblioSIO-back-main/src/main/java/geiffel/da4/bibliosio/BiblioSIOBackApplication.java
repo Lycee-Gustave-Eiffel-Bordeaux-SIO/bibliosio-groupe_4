@@ -61,9 +61,9 @@ public class BiblioSIOBackApplication {
             emprunteurRepository.saveAll(emprunteurs);
 
             List<Exemplaire> exemplaires = new ArrayList<>(){{
-                add(new Exemplaire(1L, "titre1", null, null, revues.get(0)));
-                add(new Exemplaire(2L, "titre2", null, null, revues.get(1)));
-                add(new Exemplaire(3L, "titre3", null, null, revues.get(2)));
+                add(new Exemplaire(1L, "titre1", "2024", null, null, revues.get(0)));
+                add(new Exemplaire(2L, "titre2", "2020", "Octobre", null, revues.get(1)));
+                add(new Exemplaire(3L, "titre3", "2019", "Octobre/Décembre", null, revues.get(2)));
             }};
             exemplaireRepository.saveAll(exemplaires);
 

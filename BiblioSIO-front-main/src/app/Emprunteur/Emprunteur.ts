@@ -12,3 +12,9 @@ export enum Classe {
   SIO2A = "SIO2A",
   SIO2B = "SIO2B",
 }
+
+export class VotreComponente {
+  ClasseArray = Object.values(Classe);
+
+  constructor() { }
+}
