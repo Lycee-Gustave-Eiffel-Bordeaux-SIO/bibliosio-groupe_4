@@ -1,4 +1,8 @@
 <h1>Liste des exemplaires : </h1>
+<button class="sortNum" (click)="sortNum()">Tri par numéro</button>
+<button class="sortAnnee">Tri par année</button>
+<br>
+
 <app-exemplaire-details
   *ngFor="let exemplaire of exemplaires"
   (click)="openExemplaireDetails(exemplaire)"

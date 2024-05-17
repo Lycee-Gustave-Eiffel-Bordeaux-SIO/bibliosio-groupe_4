@@ -1,10 +1,10 @@
 package geiffel.da4.bibliosio.revue;
 
-
-import geiffel.da4.bibliosio.exceptions.ResourceAlreadyExistsException;
-import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
+import exceptions.ResourceAlreadyExistsException;
+import exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -17,16 +17,14 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
-
+import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = RevueJPAService.class)
 @SpringBootTest
 public class RevueServiceTest 
 {
     @Autowired
-    private RevueService revueService;
+    private RevueJPAService revueJPAService;
 
     @MockBean
     private RevueRepository revueRepository;
@@ -38,102 +36,96 @@ public class RevueServiceTest
     {
          revues = new ArrayList<>()
         {{
-            add(new Revue(1L, "Titre1"));
-            add(new Revue(2L, "Titre1"));
-            add(new Revue(3L, "Titre1"));
+            add(new RevueBuilder().build());
+            add(new RevueBuilder().withId(2L).build());
+            add(new RevueBuilder().withId(3L).build());
         }};
-
-        Revue revue1 = revues.get(0);
-        Revue revue3 = revues.get(2);
-        when(revueRepository.findById(1L)).thenReturn(Optional.of(revue1));
-        when(revueRepository.findById(3L)).thenReturn(Optional.of(revue3));
     }
 
     @Test
     void whenGettingAll_shouldReturn3()
     {
         when(revueRepository.findAll()).thenReturn(revues);
-        assertEquals(3, revueService.getAll().size());
+
+        assertEquals(3, revueJPAService.getAll().size());
     }
 
     @Test
-    void whenGettingById_shouldReturnIfExists_andBeTheSame()
-    {
+    void whenGettingById_shouldReturnIfExists_andBeTheSame() {
         when(revueRepository.findById(1L)).thenReturn(Optional.of(revues.get(0)));
         when(revueRepository.findById(3L)).thenReturn(Optional.of(revues.get(2)));
         when(revueRepository.findById(12L)).thenReturn(Optional.empty());
         when(revueRepository.findById(4L)).thenReturn(Optional.empty());
 
         assertAll(
-                () -> assertEquals(revues.get(0), revueService.getById(1L)),
-                () -> assertEquals(revues.get(2), revueService.getById(3L)),
-                () -> assertThrows(ResourceNotFoundException.class, () -> revueService.getById(12L)),
-                () -> assertThrows(ResourceNotFoundException.class, () -> revueService.getById(4L))
+                () -> assertEquals(revues.get(0), revueJPAService.getById(1L)),
+                () -> assertEquals(revues.get(2), revueJPAService.getById(3L)),
+                () -> assertThrows(ResourceNotFoundException.class, () -> revueJPAService.getById(12L)),
+                () -> assertThrows(ResourceNotFoundException.class, () -> revueJPAService.getById(4L))
         );
     }
 
     @Test
-    void whenCreating_ShouldReturnSame()
-    {
-        Revue newRevue = new Revue(5L, "titre5");
+    void whenCreating_ShouldReturnSame() {
+        Revue newRevue = new RevueBuilder().withId(4L).build();
 
         when(revueRepository.save(any(Revue.class))).thenReturn(newRevue);
 
-        assertEquals(newRevue, revueService.create(newRevue));
+        assertEquals(newRevue, revueJPAService.create(newRevue));
     }
 
     @Test
-    void whenCreatingWithSameId_shouldReturnEmpty()
-    {
+    void whenCreatingWithSameId_shouldReturnEmpty() {
         Revue same_revue = revues.get(0);
 
         doThrow(ResourceAlreadyExistsException.class).when(revueRepository).existsById(same_revue.getId());
 
-        assertThrows(ResourceAlreadyExistsException.class, ()->revueService.create(same_revue));
+        assertThrows(ResourceAlreadyExistsException.class, ()->revueJPAService.create(same_revue));
     }
 
     @Test
-    void whenUpdating_shouldModifyRevue()
-    {
+    void whenUpdating_shouldModifyRevue() {
         Revue revue = revues.get(0);
         revue.setTitre("nouveauTitre");
 
+        when(revueRepository.findAll()).thenReturn(revues);
         when(revueRepository.existsById(revue.getId())).thenReturn(true);
         when(revueRepository.save(any(Revue.class))).thenReturn(revue);
 
-        assertEquals(revue, revueService.update(revue.getId(), revue));
+        Revue updatedRevue = revueJPAService.update(revue.getId(), revue);
+
+        assertEquals(revue, updatedRevue);
+        assertTrue(revueJPAService.getAll().contains(updatedRevue));
     }
 
     @Test
-    void whenUpdatingNonExisting_shouldThrowException()
-    {
+    void whenUpdatingNonExisting_shouldThrowException() {
         Revue revue = revues.get(2);
 
         when(revueRepository.exists(Example.of(revue))).thenReturn(false);
 
-        assertThrows(ResourceNotFoundException.class, ()->revueService.update(75L, revue));
+        assertThrows(ResourceNotFoundException.class, ()->revueJPAService.update(75L, revue));
     }
 
     @Test
-    void whenDeletingExistingRevue_shouldNotBeInRevuesAnymore()
-    {
+    void whenDeletingExistingRevue_shouldNotBeInArticlesAnymore() {
         Revue revue = revues.get(1);
         Long id = revue.getId();
 
+        Mockito.reset(revueRepository);
         when(revueRepository.existsById(revue.getId())).thenReturn(true);
 
-        revueService.delete(id);
+        revueJPAService.delete(id);
 
-        assertFalse(revueService.getAll().contains(revue));
+        assertFalse(revueJPAService.getAll().contains(revue));
     }
 
     @Test
-    void whenDeletingNonExisting_shouldThrowException()
-    {
+    void whenDeletingNonExisting_shouldThrowException() {
         Long id = 68L;
 
         doThrow(ResourceNotFoundException.class).when(revueRepository).delete(any());
 
-        assertThrows(ResourceNotFoundException.class, ()->revueService.delete(id));
+        assertThrows(ResourceNotFoundException.class, ()->revueJPAService.delete(id));
     }
 }

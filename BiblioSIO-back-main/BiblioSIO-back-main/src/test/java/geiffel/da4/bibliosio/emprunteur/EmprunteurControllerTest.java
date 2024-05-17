@@ -1,9 +1,9 @@
 package geiffel.da4.bibliosio.emprunteur;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import geiffel.da4.bibliosio.exceptions.ExceptionHandlingAdvice;
-import geiffel.da4.bibliosio.exceptions.ResourceAlreadyExistsException;
-import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
+import exceptions.ExceptionHandlingAdvice;
+import exceptions.ResourceAlreadyExistsException;
+import exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -102,7 +102,7 @@ public class EmprunteurControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(new_emp))
         ).andExpect(status().isCreated()
-        ).andExpect(header().string("Location", "/emprunteurs/"+new_emp.getNUMEROEMP())
+        ).andExpect(header().string("Location", "/emprunteurs/"+new_emp.getId())
         ).andDo(print());
 
         verify(emprunteurService).create(emp_received.capture());
@@ -122,10 +122,10 @@ public class EmprunteurControllerTest {
     @Test
     void whenUpdating_shouldReceiveEmprunteurToUpdate_andReturnNoContent() throws Exception {
         Emprunteur initial_emp = emprunteurs.get(1);
-        Emprunteur updated_emp = new Emprunteur(initial_emp.getNUMEROEMP(), "updated","updated", "updated");
+        Emprunteur updated_emp = new Emprunteur(initial_emp.getId(), "updated","updated", "updated");
         ArgumentCaptor<Emprunteur> emp_received = ArgumentCaptor.forClass(Emprunteur.class);
 
-        mockMvc.perform(put("/emprunteurs/"+initial_emp.getNUMEROEMP())
+        mockMvc.perform(put("/emprunteurs/"+initial_emp.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(updated_emp))
         ).andExpect(status().isNoContent());

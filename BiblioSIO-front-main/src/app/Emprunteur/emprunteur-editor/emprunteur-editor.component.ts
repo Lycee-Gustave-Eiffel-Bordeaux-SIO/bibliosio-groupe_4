@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Emprunteur} from "../Emprunteur";
 import {EmprunteurService} from "../emprunteur.service";
 import {Router} from "@angular/router";
@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
   templateUrl: './emprunteur-editor.component.html',
   styleUrls: ['./emprunteur-editor.component.css']
 })
-export class EmprunteurEditorComponent {
+export class EmprunteurEditorComponent implements OnInit{
 
   emprunteur: Emprunteur = {} as Emprunteur
   updating: boolean = false
@@ -29,11 +29,11 @@ export class EmprunteurEditorComponent {
 
   edit() {
     if(this.updating) {
-      this.emprunteurService.update(this.emprunteur)
+      this.emprunteurService.updateEmprunteur(this.emprunteur)
           .subscribe(()=>this.processUpdate())
     } else if (this.creating) {
-      this.emprunteurService.create(this.emprunteur)
-          .subscribe((location)=>this.processCreate(location))
+      this.emprunteurService.createEmprunteur(this.emprunteur)
+          .subscribe((location)=>this.processCreate(location.toString()))
     }
   }
 

@@ -10,9 +10,9 @@ public class EmprunteurJSONSerializer extends JsonSerializer<Emprunteur> {
     @Override
     public void serialize(Emprunteur emprunteur, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
-        gen.writeStringField("nom",emprunteur.getNOMEMP());
-        gen.writeStringField("prenom",emprunteur.getPRENOMEMP());
-        gen.writeStringField("url", "/emprunteurs/"+emprunteur.getNUMEROEMP());
+        gen.writeStringField("nom",emprunteur.getNomEmprunteur());
+        gen.writeStringField("prenom",emprunteur.getPrenomEmprunteur());
+        gen.writeStringField("url", "/emprunteurs/"+emprunteur.getId());
         gen.writeEndObject();
     }
 }

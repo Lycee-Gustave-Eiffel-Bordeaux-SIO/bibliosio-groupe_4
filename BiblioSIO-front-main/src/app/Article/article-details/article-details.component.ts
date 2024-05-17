@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {Article} from "../../Article/Article";
-import {ArticleService} from "../../Article/article.service";
+import {Component, Input, OnInit} from '@angular/core';
+import {Article} from "../Article";
+import {ArticleService} from "../article.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -8,7 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
   templateUrl: './article-details.component.html',
   styleUrls: ['./article-details.component.css']
 })
-export class ArticleDetailsComponent {
+export class ArticleDetailsComponent implements OnInit{
   @Input() article!: Article
   @Input() solo: boolean = true
 
@@ -20,23 +20,20 @@ export class ArticleDetailsComponent {
 
   ngOnInit(){
     if(this.article==null) {
-      this.article=history.state.article
-      if (history.state.article==null) {
-        this.articleService.getById(Number(this.activatedRoute.snapshot.paramMap.get("id")))
-            .subscribe(article=>this.article=article)
+      this.article=history.state.revue
+      if (history.state.revue==null) {
+        this.articleService.getArticleById(Number(this.activatedRoute.snapshot.paramMap.get("id")))
+          .subscribe(value=>this.article=value)
       }
     }
     this.solo=history.state.solo
   }
 
-  delete(){
-    this.articleService.delete(this.article)
-        .subscribe(()=>this.router.navigate(['/articles']))
+  delete() {
+    this.articleService.deleteArticle(this.article).subscribe(() => this.router.navigate(['/articles']));
   }
 
   update() {
-    this.router.navigate(["/articles/edit"],
-        {state: {article: this.article,
-            updating: true}})
+    this.router.navigate(['/articles/edit'], { state: { article: this.article, updating: true } });
   }
 }

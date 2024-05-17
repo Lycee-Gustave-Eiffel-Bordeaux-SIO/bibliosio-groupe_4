@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {EmprunteurService} from "../emprunteur.service";
 import {Emprunteur} from "../Emprunteur";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -8,7 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
   templateUrl: './emprunteur-details.component.html',
   styleUrls: ['./emprunteur-details.component.css']
 })
-export class EmprunteurDetailsComponent {
+export class EmprunteurDetailsComponent implements OnInit{
 
   @Input() emprunteur!: Emprunteur
   @Input() solo: boolean = true
@@ -25,7 +25,7 @@ export class EmprunteurDetailsComponent {
       console.log(history)
       console.log(history.state.emprunteur==null)
       if (history.state.emprunteur==null) {
-        this.emprunteurService.getById(Number(this.activatedRoute.snapshot.paramMap.get("id")))
+        this.emprunteurService.getEmprunteurById(Number(this.activatedRoute.snapshot.paramMap.get("id")))
             .subscribe(emprunteur=>this.emprunteur=emprunteur)
       }
     }
@@ -33,7 +33,7 @@ export class EmprunteurDetailsComponent {
   }
 
   delete(){
-    this.emprunteurService.delete(this.emprunteur)
+    this.emprunteurService.deleteEmprunteur(this.emprunteur)
         .subscribe(()=>this.router.navigate(['/emprunteurs']))
   }
 

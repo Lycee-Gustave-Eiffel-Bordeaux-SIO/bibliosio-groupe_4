@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Revue} from "../Revue";
 import {RevueService} from "../revue.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -8,7 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
   templateUrl: './revue-details.component.html',
   styleUrls: ['./revue-details.component.css']
 })
-export class RevueDetailsComponent {
+export class RevueDetailsComponent implements OnInit{
   @Input() revue!: Revue
   @Input() solo: boolean = true
 
@@ -22,7 +22,7 @@ export class RevueDetailsComponent {
     if(this.revue==null) {
       this.revue=history.state.revue
       if (history.state.revue==null) {
-        this.revueService.getById(Number(this.activatedRoute.snapshot.paramMap.get("id")))
+        this.revueService.getRevueById(Number(this.activatedRoute.snapshot.paramMap.get("id")))
             .subscribe(revue=>this.revue=revue)
       }
     }
@@ -30,7 +30,7 @@ export class RevueDetailsComponent {
   }
 
   delete(){
-    this.revueService.delete(this.revue)
+    this.revueService.deleteRevue(this.revue)
         .subscribe(()=>this.router.navigate(['/revues']))
   }
 

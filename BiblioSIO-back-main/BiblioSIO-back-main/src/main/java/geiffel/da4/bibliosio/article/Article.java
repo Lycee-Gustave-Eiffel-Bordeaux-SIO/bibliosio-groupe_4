@@ -6,9 +6,7 @@ import geiffel.da4.bibliosio.exemplaire.Exemplaire;
 import geiffel.da4.bibliosio.exemplaire.ExemplaireJSONSerializer;
 import geiffel.da4.bibliosio.revue.Revue;
 import geiffel.da4.bibliosio.revue.RevueEmbeddedJSONSerializer;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
@@ -18,6 +16,7 @@ public class Article
     // Attributs
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String titre;

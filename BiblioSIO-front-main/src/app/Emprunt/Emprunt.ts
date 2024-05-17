@@ -2,12 +2,12 @@ import {SerializedUrlObject} from "../utils/SerializedUrlObject";
 
 export interface Emprunt {
   id: Number,
-  emprunteur: SerializedUrlObject,
-  exemplaire: SerializedUrlObject,
-  dateEmprunt: Date,
-  dateEcheance: Date,
-  dateRetour: Date,
-  statut: StatutEmprunt
+  dateDebut?: String,
+  dateRetour?: String,
+  statut?: StatutEmprunt,
+  emprunteur?: SerializedUrlObject,
+  exemplaire?: SerializedUrlObject,
+  dateEcheance?: Date
 }
 
 export enum StatutEmprunt {

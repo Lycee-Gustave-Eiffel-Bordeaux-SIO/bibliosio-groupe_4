@@ -1,13 +1,10 @@
-import {SerializedUrlObject} from "../utils/SerializedUrlObject";
-
 export interface Emprunteur {
   id: Number
-  nom: string
-  prenom: string
-  mail: string
-  promo: string
-  classe: Classe
-  emprunts: SerializedUrlObject[]
+  nomEmprunteur?: string
+  prenomEmprunteur?: string
+  mailEmprunteur?: string
+  promo?: string
+  classe?: Classe
 }
 export enum Classe {
   SIO1A = "SIO1A",

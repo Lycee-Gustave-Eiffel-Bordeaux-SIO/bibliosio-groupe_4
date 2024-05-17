@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {Article} from "../../Article/Article";
-import {ArticleService} from "../../Article/article.service";
+import {Article} from "../Article";
+import {ArticleService} from "../article.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 })
 export class ArticleListComponent {
   articles!: Article[];
+  selectedArticle!: Article;
 
   constructor(
       private articleService: ArticleService,
@@ -19,9 +20,28 @@ export class ArticleListComponent {
   }
 
   public getAllArticles(){
-    this.articleService.getAllArticles().subscribe((articles) => {
-      this.articles = articles;
+    this.articleService.getAllArticles().subscribe((value) => {
+      this.articles = value;
     });
+  }
+
+  public getArticleById(id: number) {
+    this.articleService.getArticleById(id).subscribe((value) => {
+      this.selectedArticle = value;
+    });
+  }
+
+  public updateArticle(article: Article) {
+    this.articleService.updateArticle(article).subscribe();
+
+  }
+
+  public deleteArticle(article: Article) {
+    this.articleService.deleteArticle(article).subscribe();
+  }
+
+  public createArticle(article: Article) {
+    this.articleService.createArticle(article).subscribe();
   }
 
   openArticleDetails(article: Article) {

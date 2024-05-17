@@ -2,9 +2,9 @@ package geiffel.da4.bibliosio.article;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import geiffel.da4.bibliosio.exceptions.ExceptionHandlingAdvice;
-import geiffel.da4.bibliosio.exceptions.ResourceAlreadyExistsException;
-import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
+import exceptions.ExceptionHandlingAdvice;
+import exceptions.ResourceAlreadyExistsException;
+import exceptions.ResourceNotFoundException;
 import geiffel.da4.bibliosio.exemplaire.Exemplaire;
 import geiffel.da4.bibliosio.revue.Revue;
 import org.junit.jupiter.api.BeforeEach;
@@ -76,6 +76,7 @@ public class ArticleControllerTest
             add(new Article(7L, "titre7", "description14", revues.get(1),exemplaires.get(1)));
             add(new Article(28L, "titre28", "description14", revues.get(2),exemplaires.get(2)));
         }};
+
         when(articleService.getAll()).thenReturn(articles);
         when(articleService.getById(7L)).thenReturn(articles.get(4));
         when(articleService.getById(49L)).thenThrow(ResourceNotFoundException.class);
@@ -84,6 +85,7 @@ public class ArticleControllerTest
     @Test
     void whenGettingAll_shouldGet6_andBe200() throws Exception
     {
+        when(articleService.getAll()).thenReturn(articles);
         assertEquals(6, articleService.getAll().size());
 
         mockMvc.perform(get("/articles")

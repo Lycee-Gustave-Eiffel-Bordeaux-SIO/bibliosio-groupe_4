@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import {Article} from "../../Article/Article";
-import {ArticleService} from "../../Article/article.service";
+import {Component, OnInit} from '@angular/core';
+import {Article} from "../Article";
+import {ArticleService} from "../article.service";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {Exemplaire} from "../../Exemplaire/Exemplaire";
@@ -11,15 +11,13 @@ import {ExemplaireService} from "../../Exemplaire/exemplaire.service";
   templateUrl: './article-editor.component.html',
   styleUrls: ['./article-editor.component.css']
 })
-export class ArticleEditorComponent {
+export class ArticleEditorComponent implements OnInit{
   article: Article = {} as Article
   updating: boolean = false
   creating: boolean = false
-  exemplaires$!: Observable<Exemplaire[]>
 
   constructor(
       private articleService: ArticleService,
-      private exemplaireService: ExemplaireService,
       private router: Router
   ) {}
 
@@ -29,16 +27,15 @@ export class ArticleEditorComponent {
     }
     this.creating = history.state.creating
     this.updating = history.state.updating
-    this.exemplaires$=this.exemplaireService.get()
   }
 
   edit() {
     if(this.updating) {
-      this.articleService.update(this.article)
+      this.articleService.updateArticle(this.article)
           .subscribe(()=>this.processUpdate())
     } else if (this.creating) {
-      this.articleService.create(this.article)
-          .subscribe((location)=>this.processCreate(location))
+      this.articleService.createArticle(this.article)
+          .subscribe((location)=>this.processCreate(location.toString()))
     }
   }
 

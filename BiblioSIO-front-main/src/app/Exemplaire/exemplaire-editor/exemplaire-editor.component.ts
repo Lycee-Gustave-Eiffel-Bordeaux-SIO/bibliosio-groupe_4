@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import {Exemplaire} from "../../Exemplaire/Exemplaire";
-import {ExemplaireService} from "../../Exemplaire/exemplaire.service";
+import {Component, OnInit} from '@angular/core';
+import {Exemplaire} from "../Exemplaire";
+import {ExemplaireService} from "../exemplaire.service";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {Revue} from "../../Revue/Revue";
@@ -11,7 +11,7 @@ import {RevueService} from "../../Revue/revue.service";
   templateUrl: './exemplaire-editor.component.html',
   styleUrls: ['./exemplaire-editor.component.css']
 })
-export class ExemplaireEditorComponent {
+export class ExemplaireEditorComponent implements OnInit {
   exemplaire: Exemplaire = {} as Exemplaire
   updating: boolean = false
   creating: boolean = false
@@ -19,29 +19,24 @@ export class ExemplaireEditorComponent {
 
   constructor(
       private exemplaireService: ExemplaireService,
-      private revueService: RevueService,
       private router: Router
   ) {}
 
   ngOnInit() {
-    if (history.state.exemplaire!=null){
-      this.exemplaire=history.state.exemplaire
+    if (history.state.revue!=null){
+      this.exemplaire=history.state.revue
     }
     this.creating = history.state.creating
-    if(this.creating) {
-      this.exemplaire.statut=true;
-    }
     this.updating = history.state.updating
-    this.revues$=this.revueService.get()
   }
 
   edit() {
     if(this.updating) {
-      this.exemplaireService.update(this.exemplaire)
+      this.exemplaireService.updateExemplaire(this.exemplaire)
           .subscribe(()=>this.processUpdate())
     } else if (this.creating) {
-      this.exemplaireService.create(this.exemplaire)
-          .subscribe((location)=>this.processCreate(location))
+      this.exemplaireService.createExemplaire(this.exemplaire)
+          .subscribe((location)=>this.processCreate(location.toString()))
     }
   }
 

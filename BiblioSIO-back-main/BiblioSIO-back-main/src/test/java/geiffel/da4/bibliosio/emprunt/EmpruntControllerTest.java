@@ -2,11 +2,10 @@ package geiffel.da4.bibliosio.emprunt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import geiffel.da4.bibliosio.emprunteur.Emprunteur;
-import geiffel.da4.bibliosio.exceptions.ExceptionHandlingAdvice;
-import geiffel.da4.bibliosio.exceptions.ResourceAlreadyExistsException;
-import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
+import exceptions.ExceptionHandlingAdvice;
+import exceptions.ResourceAlreadyExistsException;
+import exceptions.ResourceNotFoundException;
 import geiffel.da4.bibliosio.exemplaire.Exemplaire;
-import geiffel.da4.bibliosio.revue.Revue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -57,10 +56,10 @@ public class EmpruntControllerTest {
         ex1 = Mockito.mock(Exemplaire.class);
         ex2 = Mockito.mock(Exemplaire.class);
 
-        Mockito.when(emprunteur1.getNUMEROEMP()).thenReturn(1L);
-        Mockito.when(emprunteur2.getNUMEROEMP()).thenReturn(2L);
-        Mockito.when(ex1.getIDEX()).thenReturn(1L);
-        Mockito.when(ex2.getIDEX()).thenReturn(2L);
+        Mockito.when(emprunteur1.getId()).thenReturn(1L);
+        Mockito.when(emprunteur2.getId()).thenReturn(2L);
+        Mockito.when(ex1.getId()).thenReturn(1L);
+        Mockito.when(ex2.getId()).thenReturn(2L);
 
         emprunts = new ArrayList<>(){{
             add(new Emprunt(1L,"01/01/2023","11/01/2023","statut1",emprunteur1,ex1));
@@ -114,7 +113,7 @@ public class EmpruntControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(new_emp))
         ).andExpect(status().isCreated()
-        ).andExpect(header().string("Location", "/emprunts/"+new_emp.getIDEMPRUNT())
+        ).andExpect(header().string("Location", "/emprunts/"+new_emp.getId())
         ).andDo(print());
 
         verify(empruntService).create(emp_received.capture());
@@ -134,10 +133,10 @@ public class EmpruntControllerTest {
     @Test
     void whenUpdating_shouldReceiveEmprunteurToUpdate_andReturnNoContent() throws Exception {
         Emprunt initial_emp = emprunts.get(1);
-        Emprunt updated_emp = new Emprunt(initial_emp.getIDEMPRUNT() , "dated", "datef","statut", emprunteur1,ex1);
+        Emprunt updated_emp = new Emprunt(initial_emp.getId() , "dated", "datef","statut", emprunteur1,ex1);
         ArgumentCaptor<Emprunt> emp_received = ArgumentCaptor.forClass(Emprunt.class);
 
-        mockMvc.perform(put("/emprunts/"+initial_emp.getIDEMPRUNT())
+        mockMvc.perform(put("/emprunts/"+initial_emp.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(updated_emp))
         ).andExpect(status().isNoContent());

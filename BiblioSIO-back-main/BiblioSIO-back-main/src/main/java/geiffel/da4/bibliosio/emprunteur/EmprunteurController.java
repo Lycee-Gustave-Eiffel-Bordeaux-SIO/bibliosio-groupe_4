@@ -33,7 +33,7 @@ public class EmprunteurController {
     @PostMapping("")
     public ResponseEntity createEmprunteur(@RequestBody Emprunteur emprunteur) {
         Emprunteur created_emprunteur = emprunteurService.create(emprunteur);
-        return ResponseEntity.created(URI.create("/emprunteurs/"+created_emprunteur.getNUMEROEMP().toString())).build();
+        return ResponseEntity.created(URI.create("/emprunteurs/"+created_emprunteur.getId().toString())).build();
     }
 
     @PutMapping("/{id}")

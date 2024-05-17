@@ -10,12 +10,12 @@ public class EmpruntJSONSerializer extends JsonSerializer<Emprunt> {
     @Override
     public void serialize(Emprunt emprunt, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
-        gen.writeStringField("emprunteur",emprunt.getEmprunteur().getNOMPRENOM());
-        gen.writeStringField("exemplaire",emprunt.getExemplaire().getTITREEX());
-        gen.writeStringField("date debut",emprunt.getDATEDEBUT());
-        gen.writeStringField("date de retour",emprunt.getDATERETOUR());
-        gen.writeStringField("statut",emprunt.getSTATUT());
-        gen.writeStringField("url", "/emprunts/"+emprunt.getIDEMPRUNT());
+        gen.writeStringField("emprunteur",emprunt.getEmprunteur().getNomEmprunteur());
+        gen.writeStringField("exemplaire",emprunt.getExemplaire().getTitre());
+        gen.writeStringField("date debut",emprunt.getDateDebut());
+        gen.writeStringField("date de retour",emprunt.getDateRetour());
+        gen.writeStringField("statut",emprunt.getStatut());
+        gen.writeStringField("url", "/emprunts/"+emprunt.getId());
         gen.writeEndObject();
     }
 }

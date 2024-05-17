@@ -1,9 +1,9 @@
 package geiffel.da4.bibliosio.revue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import geiffel.da4.bibliosio.exceptions.ExceptionHandlingAdvice;
-import geiffel.da4.bibliosio.exceptions.ResourceAlreadyExistsException;
-import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
+import exceptions.ExceptionHandlingAdvice;
+import exceptions.ResourceAlreadyExistsException;
+import exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,7 +40,7 @@ public class RevueControllerTest
     @Autowired
     MockMvc mockMvc;
 
-    @MockBean(name="jpaRevues")
+    @MockBean(name="jpaRevue")
     RevueService revueService;
 
     private List<Revue> revues;

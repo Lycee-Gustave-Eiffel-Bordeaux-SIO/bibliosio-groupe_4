@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {Revue} from "../Revue";
 import {RevueService} from "../revue.service";
@@ -8,7 +8,7 @@ import {RevueService} from "../revue.service";
   templateUrl: './revue-editor.component.html',
   styleUrls: ['./revue-editor.component.css']
 })
-export class RevueEditorComponent {
+export class RevueEditorComponent implements OnInit{
   revue: Revue = {} as Revue
   updating: boolean = false
   creating: boolean = false
@@ -28,11 +28,11 @@ export class RevueEditorComponent {
 
   edit() {
     if(this.updating) {
-      this.revueService.update(this.revue)
+      this.revueService.updateRevue(this.revue)
           .subscribe(()=>this.processUpdate())
     } else if (this.creating) {
-      this.revueService.create(this.revue)
-          .subscribe((location)=>this.processCreate(location))
+      this.revueService.createRevue(this.revue)
+          .subscribe((location)=>this.processCreate(location.toString()))
     }
   }
 

@@ -9,16 +9,39 @@ import {Router} from "@angular/router";
   styleUrls: ['./emprunteur-list.component.css']
 })
 export class EmprunteurListComponent {
-
-  emprunteurs: Emprunteur[]
+  emprunteurs!: Emprunteur[];
+  selectedEmprunteur!: Emprunteur;
 
   constructor(
     private emprunteurService: EmprunteurService,
     private router: Router
   ) {
-    this.emprunteurs = []
-    emprunteurService.get()
-      .subscribe((emprunteurs)=>this.emprunteurs=emprunteurs)
+    this.getAllEmprunteurs();
+  }
+
+  public getAllEmprunteurs(){
+    this.emprunteurService.getAllEmprunteurs().subscribe((value) => {
+      this.emprunteurs = value;
+    });
+  }
+
+  public getEmprunteurById(id: number) {
+    this.emprunteurService.getEmprunteurById(id).subscribe((value) => {
+      this.selectedEmprunteur = value;
+    })
+  }
+
+  public updateEmprunteur(emprunteur: Emprunteur) {
+    this.emprunteurService.updateEmprunteur(emprunteur).subscribe();
+
+  }
+
+  public deleteEmprunteur(emprunteur: Emprunteur) {
+    this.emprunteurService.deleteEmprunteur(emprunteur).subscribe();
+  }
+
+  public createEmprunteur(emprunteur: Emprunteur) {
+    this.emprunteurService.createEmprunteur(emprunteur).subscribe();
   }
 
   openEmprunteurDetails(emprunteur: Emprunteur) {

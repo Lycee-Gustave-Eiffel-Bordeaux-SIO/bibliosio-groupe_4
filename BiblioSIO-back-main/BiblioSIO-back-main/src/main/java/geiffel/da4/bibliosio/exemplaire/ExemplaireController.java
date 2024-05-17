@@ -34,7 +34,7 @@ public class ExemplaireController {
     @PostMapping("")
     public ResponseEntity createExemplaire(@RequestBody Exemplaire exemplaire) {
         Exemplaire created_exemplaire = exemplaireService.create(exemplaire);
-        return ResponseEntity.created(URI.create("/exemplaires/"+created_exemplaire.getIDEX().toString())).build();
+        return ResponseEntity.created(URI.create("/exemplaires/"+created_exemplaire.getId().toString())).build();
     }
 
     @PutMapping("/{id}")

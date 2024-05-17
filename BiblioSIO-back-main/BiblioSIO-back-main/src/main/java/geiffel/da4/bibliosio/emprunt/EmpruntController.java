@@ -32,7 +32,7 @@ public class EmpruntController {
     @PostMapping("")
     public ResponseEntity createEmprunt(@RequestBody Emprunt emprunt) {
         Emprunt created_emprunt = empruntService.create(emprunt);
-        return ResponseEntity.created(URI.create("/emprunts/"+created_emprunt.getIDEMPRUNT().toString())).build();
+        return ResponseEntity.created(URI.create("/emprunts/"+created_emprunt.getId().toString())).build();
     }
 
     @PutMapping("/{id}")

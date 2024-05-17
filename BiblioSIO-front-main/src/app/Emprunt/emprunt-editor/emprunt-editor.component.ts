@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {Emprunt, StatutEmprunt} from "../Emprunt";
 import {EmpruntService} from "../emprunt.service";
@@ -14,13 +14,13 @@ import {NgForm} from "@angular/forms";
   templateUrl: './emprunt-editor.component.html',
   styleUrls: ['./emprunt-editor.component.css']
 })
-export class EmpruntEditorComponent {
-  emprunt: Emprunt = {} as Emprunt
-  updating: boolean = false
-  creating: boolean = false
-  emprunteurs$!: Observable<Emprunteur[]>
-  exemplaires$!: Observable<Exemplaire[]>
-  statuts = Object.values(StatutEmprunt)
+export class EmpruntEditorComponent implements OnInit{
+  emprunt: Emprunt = {} as Emprunt;
+  updating: boolean = false;
+  creating: boolean = false;
+  emprunteurs$!: Observable<Emprunteur[]>;
+  exemplaires$!: Observable<Exemplaire[]>;
+  statuts = Object.values(StatutEmprunt);
   @ViewChild('myForm') myForm!: NgForm;
 
   constructor(
@@ -32,23 +32,23 @@ export class EmpruntEditorComponent {
 
   ngOnInit() {
     if (history.state.emprunt!=null){
-      this.emprunt=history.state.emprunt
+      this.emprunt=history.state.emprunt;
     }
-    this.creating = history.state.creating
-    this.updating = history.state.updating
-    this.emprunteurs$=this.emprunteurService.get()
-    this.exemplaires$=this.exemplaireService.get()
+    this.creating = history.state.creating;
+    this.updating = history.state.updating;
+    this.emprunteurs$=this.emprunteurService.getAllEmprunteurs();
+    this.exemplaires$=this.exemplaireService.getAllExemplaires();
   }
 
   edit() {
     if(this.updating) {
       console.log(this.myForm.value)
       console.log(this.emprunt)
-      this.empruntService.update(this.emprunt)
+      this.empruntService.updateEmprunt(this.emprunt)
           .subscribe(()=>this.processUpdate())
     } else if (this.creating) {
-      this.empruntService.create(this.emprunt)
-          .subscribe((location)=>this.processCreate(location))
+      this.empruntService.createEmprunt(this.emprunt)
+          .subscribe((location)=>this.processCreate(location.toString()))
     }
   }
 

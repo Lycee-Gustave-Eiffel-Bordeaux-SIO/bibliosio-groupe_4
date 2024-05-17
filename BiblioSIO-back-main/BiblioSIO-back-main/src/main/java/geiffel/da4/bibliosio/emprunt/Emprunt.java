@@ -5,25 +5,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import geiffel.da4.bibliosio.emprunteur.Emprunteur;
 import geiffel.da4.bibliosio.exemplaire.Exemplaire;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "IDEMPRUNT")
 public class Emprunt {
 
     @Id
-    @JsonProperty
-    private Long IDEMPRUNT;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private String DATEDEBUT;
+    private String dateDebut;
 
-    private String DATERETOUR;
+    private String dateRetour;
 
-    private String STATUT;
+    private String statut;
+
     @ManyToOne
     private Emprunteur emprunteur;
 
@@ -32,45 +30,45 @@ public class Emprunt {
 
     public Emprunt() {}
 
-    public Emprunt(Long IDEMPRUNT, String DATEDEBUT, String DATERETOUR, String STATUT, Emprunteur emprunteur, Exemplaire exemplaire) {
-        this.IDEMPRUNT = IDEMPRUNT;
-        this.DATEDEBUT = DATEDEBUT;
-        this.DATERETOUR = DATERETOUR;
-        this.STATUT = STATUT;
+    public Emprunt(Long id, String dateDebut, String dateRetour, String statut, Emprunteur emprunteur, Exemplaire exemplaire) {
+        this.id = id;
+        this.dateDebut = dateDebut;
+        this.dateRetour = dateRetour;
+        this.statut = statut;
         this.emprunteur = emprunteur;
         this.exemplaire = exemplaire;
     }
 
-    public Long getIDEMPRUNT() {
-        return IDEMPRUNT;
+    public Long getId() {
+        return id;
     }
 
-    public void setIDEMPRUNT(Long IDEMPRUNT) {
-        this.IDEMPRUNT = IDEMPRUNT;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getDATEDEBUT() {
-        return DATEDEBUT;
+    public String getDateDebut() {
+        return dateDebut;
     }
 
-    public void setDATEDEBUT(String DATEDEBUT) {
-        this.DATEDEBUT = DATEDEBUT;
+    public void setDateDebut(String dateDebut) {
+        this.dateDebut = dateDebut;
     }
 
-    public String getDATERETOUR() {
-        return DATERETOUR;
+    public String getDateRetour() {
+        return dateRetour;
     }
 
-    public void setDATERETOUR(String DATERETOUR) {
-        this.DATERETOUR = DATERETOUR;
+    public void setDateRetour(String dateRetour) {
+        this.dateRetour = dateRetour;
     }
 
-    public String getSTATUT() {
-        return STATUT;
+    public String getStatut() {
+        return statut;
     }
 
-    public void setSTATUT(String STATUT) {
-        this.STATUT = STATUT;
+    public void setStatut(String statut) {
+        this.statut = statut;
     }
 
     public Emprunteur getEmprunteur() {
@@ -90,25 +88,15 @@ public class Emprunt {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        Emprunt emprunt = (Emprunt) obj;
-        return Objects.equals(IDEMPRUNT, emprunt.IDEMPRUNT) &&
-                Objects.equals(DATEDEBUT, emprunt.DATEDEBUT) &&
-                Objects.equals(DATERETOUR, emprunt.DATERETOUR) &&
-                Objects.equals(STATUT, emprunt.STATUT) &&
-                Objects.equals(emprunteur, emprunt.emprunteur) &&
-                Objects.equals(exemplaire, emprunt.exemplaire);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Emprunt emprunt = (Emprunt) o;
+        return Objects.equals(id, emprunt.id) && Objects.equals(dateDebut, emprunt.dateDebut) && Objects.equals(dateRetour, emprunt.dateRetour) && Objects.equals(statut, emprunt.statut) && Objects.equals(emprunteur, emprunt.emprunteur) && Objects.equals(exemplaire, emprunt.exemplaire);
     }
-
 
     @Override
     public int hashCode() {
-        return Objects.hash(IDEMPRUNT, DATEDEBUT, DATERETOUR, STATUT, emprunteur, exemplaire);
+        return Objects.hash(id, dateDebut, dateRetour, statut, emprunteur, exemplaire);
     }
 }

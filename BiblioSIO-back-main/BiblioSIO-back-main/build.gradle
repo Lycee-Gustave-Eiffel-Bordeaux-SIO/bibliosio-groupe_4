@@ -24,6 +24,8 @@ dependencies {
     implementation 'com.googlecode.owasp-java-html-sanitizer:owasp-java-html-sanitizer:20220608.1'
     //implementation 'com.googlecode.owasp-java-html-sanitizer:owasp-java-html-sanitizer'
     runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+
 }
 
 tasks.named('test') {

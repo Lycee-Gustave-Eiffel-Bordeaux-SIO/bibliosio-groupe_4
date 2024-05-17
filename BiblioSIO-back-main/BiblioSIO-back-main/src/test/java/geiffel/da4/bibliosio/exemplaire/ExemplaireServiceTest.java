@@ -1,7 +1,7 @@
 package geiffel.da4.bibliosio.exemplaire;
 
-import geiffel.da4.bibliosio.exceptions.ResourceAlreadyExistsException;
-import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
+import exceptions.ResourceAlreadyExistsException;
+import exceptions.ResourceNotFoundException;
 import geiffel.da4.bibliosio.revue.Revue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -72,7 +72,7 @@ public class ExemplaireServiceTest {
         Exemplaire exemplaire = new Exemplaire(5L , "Titre1", "novembre 2010","statut", revue);
         Exemplaire exemplaire1 = new Exemplaire(3L , "Titre1", "novembre 2010","statut", revue);
         when(exemplaireRepository.save(any(Exemplaire.class))).thenReturn(exemplaire);
-        when(exemplaireRepository.existsById(exemplaire1.getIDEX())).thenReturn(true);
+        when(exemplaireRepository.existsById(exemplaire1.getId())).thenReturn(true);
         assertAll(
                 ()-> assertEquals(exemplaire, exemplaireService.create(exemplaire)),
                 ()-> assertThrows(ResourceAlreadyExistsException.class, ()-> exemplaireService.create(exemplaire1))
@@ -82,12 +82,12 @@ public class ExemplaireServiceTest {
     @Test
     void testUpdate(){
         Exemplaire exemplaire = exemplaires.get(0);
-        exemplaire.setTITREEX("nouveauTitre");
+        exemplaire.setTitre("nouveauTitre");
 
-        when(exemplaireRepository.existsById(exemplaire.getIDEX())).thenReturn(true);
+        when(exemplaireRepository.existsById(exemplaire.getId())).thenReturn(true);
         when(exemplaireRepository.save(any(Exemplaire.class))).thenReturn(exemplaire);
 
-        assertEquals(exemplaire, exemplaireService.update(exemplaire.getIDEX(), exemplaire));
+        assertEquals(exemplaire, exemplaireService.update(exemplaire.getId(), exemplaire));
     }
 
 
@@ -96,17 +96,17 @@ public class ExemplaireServiceTest {
     void testUpdateError(){
         Revue revue = new Revue(3L,"titre");
         Exemplaire exemplaire = new Exemplaire(5L , "Titre1", "novembre 2010","statut", revue);
-        exemplaire.setIDEX(3L);
+        exemplaire.setId(3L);
         when(exemplaireRepository.exists(Example.of(exemplaire))).thenReturn(false);
-        assertThrows(ResourceNotFoundException.class, () -> exemplaireService.update(exemplaire.getIDEX(), exemplaire));
+        assertThrows(ResourceNotFoundException.class, () -> exemplaireService.update(exemplaire.getId(), exemplaire));
     }
 
     @Test
     void testDelete(){
         Exemplaire toDelete = exemplaires.get(0);
-        when(exemplaireRepository.existsById(toDelete.getIDEX())).thenReturn(true);
-        exemplaireService.delete(toDelete.getIDEX());
-        verify(exemplaireRepository).deleteById(toDelete.getIDEX());
+        when(exemplaireRepository.existsById(toDelete.getId())).thenReturn(true);
+        exemplaireService.delete(toDelete.getId());
+        verify(exemplaireRepository).deleteById(toDelete.getId());
     }
 
     @Test
@@ -115,7 +115,7 @@ public class ExemplaireServiceTest {
         Exemplaire toDelete = new Exemplaire(51L , "Titre1", "novembre 2010","statut", revue);
         doThrow(ResourceNotFoundException.class).when(exemplaireRepository).deleteById(any());
 
-        assertThrows(ResourceNotFoundException.class, () -> exemplaireService.delete(toDelete.getIDEX()));
+        assertThrows(ResourceNotFoundException.class, () -> exemplaireService.delete(toDelete.getId()));
     }
 
 }

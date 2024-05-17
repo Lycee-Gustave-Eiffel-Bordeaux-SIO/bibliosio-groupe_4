@@ -1,8 +1,7 @@
 package geiffel.da4.bibliosio.exemplaire;
 
-import geiffel.da4.bibliosio.emprunteur.Emprunteur;
-import geiffel.da4.bibliosio.exceptions.ResourceAlreadyExistsException;
-import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
+import exceptions.ResourceAlreadyExistsException;
+import exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -37,8 +36,8 @@ public class ExemplaireJPAService implements ExemplaireService{
 
     @Override
     public Exemplaire create(Exemplaire newEx) throws ResourceAlreadyExistsException {
-        if(exemplaireRepository.existsById(newEx.getIDEX())){
-            throw new ResourceAlreadyExistsException("Exemplaire",newEx.getIDEX());
+        if(exemplaireRepository.existsById(newEx.getId())){
+            throw new ResourceAlreadyExistsException("Exemplaire",newEx.getId());
         }
         else {
             return exemplaireRepository.save(newEx);

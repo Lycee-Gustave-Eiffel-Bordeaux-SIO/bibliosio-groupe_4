@@ -17,7 +17,7 @@ public class RevueController
     private RevueService revueService;
 
     @Autowired
-    public RevueController(@Qualifier("jpaRevues") RevueService revueService)
+    public RevueController(@Qualifier("jpaRevue") RevueService revueService)
     {
         this.revueService=revueService;
     }

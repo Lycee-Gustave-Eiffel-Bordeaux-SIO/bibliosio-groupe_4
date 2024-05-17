@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {Emprunt, StatutEmprunt} from "../../Emprunt/Emprunt";
-import {EmpruntService} from "../../Emprunt/emprunt.service";
+import {Component, Input, OnInit} from '@angular/core';
+import {Emprunt, StatutEmprunt} from "../Emprunt";
+import {EmpruntService} from "../emprunt.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -8,7 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
   templateUrl: './emprunt-details.component.html',
   styleUrls: ['./emprunt-details.component.css']
 })
-export class EmpruntDetailsComponent {
+export class EmpruntDetailsComponent implements OnInit{
   @Input() emprunt!: Emprunt
   @Input() solo: boolean = true
 
@@ -22,7 +22,7 @@ export class EmpruntDetailsComponent {
     if(this.emprunt==null) {
       this.emprunt=history.state.emprunt
       if (history.state.emprunt==null) {
-        this.empruntService.getById(Number(this.activatedRoute.snapshot.paramMap.get("id")))
+        this.empruntService.getEmpruntById(Number(this.activatedRoute.snapshot.paramMap.get("id")))
             .subscribe(emprunt=>this.emprunt=emprunt)
       }
     }
@@ -30,7 +30,7 @@ export class EmpruntDetailsComponent {
   }
 
   delete(){
-    this.empruntService.delete(this.emprunt)
+    this.empruntService.deleteEmprunt(this.emprunt)
         .subscribe(()=>this.router.navigate(['/emprunts']))
   }
 

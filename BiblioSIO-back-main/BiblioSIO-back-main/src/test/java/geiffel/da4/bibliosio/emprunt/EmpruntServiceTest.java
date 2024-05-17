@@ -1,8 +1,8 @@
 package geiffel.da4.bibliosio.emprunt;
 
 import geiffel.da4.bibliosio.emprunteur.Emprunteur;
-import geiffel.da4.bibliosio.exceptions.ResourceAlreadyExistsException;
-import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
+import exceptions.ResourceAlreadyExistsException;
+import exceptions.ResourceNotFoundException;
 import geiffel.da4.bibliosio.exemplaire.Exemplaire;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,10 +43,10 @@ public class EmpruntServiceTest {
         ex1 = Mockito.mock(Exemplaire.class);
         ex2 = Mockito.mock(Exemplaire.class);
 
-        Mockito.when(emprunteur1.getNUMEROEMP()).thenReturn(1L);
-        Mockito.when(emprunteur2.getNUMEROEMP()).thenReturn(2L);
-        Mockito.when(ex1.getIDEX()).thenReturn(1L);
-        Mockito.when(ex2.getIDEX()).thenReturn(2L);
+        Mockito.when(emprunteur1.getId()).thenReturn(1L);
+        Mockito.when(emprunteur2.getId()).thenReturn(2L);
+        Mockito.when(ex1.getId()).thenReturn(1L);
+        Mockito.when(ex2.getId()).thenReturn(2L);
 
         emprunts = new ArrayList<>(){{
             add(new Emprunt(1L,"01/01/2023","11/01/2023","statut1",emprunteur1,ex1));
@@ -78,7 +78,7 @@ public class EmpruntServiceTest {
         Emprunt emprunt = new Emprunt(5L , "dated", "datef","statut", emprunteur1,ex1);
         Emprunt emprunt1 = new Emprunt(3L , "dated", "datef","statut", emprunteur1,ex1);
         when(empruntRepository.save(any(Emprunt.class))).thenReturn(emprunt);
-        when(empruntRepository.existsById(emprunt1.getIDEMPRUNT())).thenReturn(true);
+        when(empruntRepository.existsById(emprunt1.getId())).thenReturn(true);
         assertAll(
                 ()-> assertEquals(emprunt, empruntService.create(emprunt)),
                 ()-> assertThrows(ResourceAlreadyExistsException.class, ()-> empruntService.create(emprunt1))
@@ -88,28 +88,28 @@ public class EmpruntServiceTest {
     @Test
     void testUpdate(){
         Emprunt emprunt = emprunts.get(0);
-        emprunt.setSTATUT("nouveauStatut");
+        emprunt.setStatut("nouveauStatut");
 
-        when(empruntRepository.existsById(emprunt.getIDEMPRUNT())).thenReturn(true);
+        when(empruntRepository.existsById(emprunt.getId())).thenReturn(true);
         when(empruntRepository.save(any(Emprunt.class))).thenReturn(emprunt);
 
-        assertEquals(emprunt, empruntService.update(emprunt.getIDEMPRUNT(), emprunt));
+        assertEquals(emprunt, empruntService.update(emprunt.getId(), emprunt));
     }
 
     @Test
     void testUpdateError(){
         Emprunt emprunt = new Emprunt(5L , "dated", "datef","statut", emprunteur1,ex1);
-        emprunt.setIDEMPRUNT(3L);
+        emprunt.setId(3L);
         when(empruntRepository.exists(Example.of(emprunt))).thenReturn(false);
-        assertThrows(ResourceNotFoundException.class, () -> empruntService.update(emprunt.getIDEMPRUNT(), emprunt));
+        assertThrows(ResourceNotFoundException.class, () -> empruntService.update(emprunt.getId(), emprunt));
     }
 
     @Test
     void testDelete(){
         Emprunt toDelete = emprunts.get(0);
-        when(empruntRepository.existsById(toDelete.getIDEMPRUNT())).thenReturn(true);
-        empruntService.delete(toDelete.getIDEMPRUNT());
-        verify(empruntRepository).deleteById(toDelete.getIDEMPRUNT());
+        when(empruntRepository.existsById(toDelete.getId())).thenReturn(true);
+        empruntService.delete(toDelete.getId());
+        verify(empruntRepository).deleteById(toDelete.getId());
     }
 
     @Test
@@ -117,6 +117,6 @@ public class EmpruntServiceTest {
         Emprunt toDelete = new Emprunt(51L , "dated", "datef","statut", emprunteur2,ex2);
         doThrow(ResourceNotFoundException.class).when(empruntRepository).deleteById(any());
 
-        assertThrows(ResourceNotFoundException.class, () -> empruntService.delete(toDelete.getIDEMPRUNT()));
+        assertThrows(ResourceNotFoundException.class, () -> empruntService.delete(toDelete.getId()));
     }
 }

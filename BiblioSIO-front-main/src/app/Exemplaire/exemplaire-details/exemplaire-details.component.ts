@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Exemplaire} from "../Exemplaire";
 import {ExemplaireService} from "../exemplaire.service";
@@ -8,7 +8,7 @@ import {ExemplaireService} from "../exemplaire.service";
   templateUrl: './exemplaire-details.component.html',
   styleUrls: ['./exemplaire-details.component.css']
 })
-export class ExemplaireDetailsComponent {
+export class ExemplaireDetailsComponent implements OnInit {
   @Input() exemplaire!: Exemplaire
   @Input() solo: boolean = true
 
@@ -22,7 +22,7 @@ export class ExemplaireDetailsComponent {
     if(this.exemplaire==null) {
       this.exemplaire=history.state.exemplaire
       if (history.state.exemplaire==null) {
-        this.exemplaireService.getById(Number(this.activatedRoute.snapshot.paramMap.get("id")))
+        this.exemplaireService.getExemplaireById(Number(this.activatedRoute.snapshot.paramMap.get("id")))
             .subscribe(exemplaire=>this.exemplaire=exemplaire)
       }
     }
@@ -30,7 +30,7 @@ export class ExemplaireDetailsComponent {
   }
 
   delete(){
-    this.exemplaireService.delete(this.exemplaire)
+    this.exemplaireService.deleteExemplaire(this.exemplaire)
         .subscribe(()=>this.router.navigate(['/exemplaires']))
   }
 

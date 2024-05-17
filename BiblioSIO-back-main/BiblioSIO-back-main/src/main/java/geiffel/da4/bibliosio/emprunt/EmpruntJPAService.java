@@ -1,8 +1,7 @@
 package geiffel.da4.bibliosio.emprunt;
 
-import geiffel.da4.bibliosio.emprunteur.Emprunteur;
-import geiffel.da4.bibliosio.exceptions.ResourceAlreadyExistsException;
-import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
+import exceptions.ResourceAlreadyExistsException;
+import exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -38,8 +37,8 @@ public class EmpruntJPAService implements EmpruntService{
 
     @Override
     public Emprunt create(Emprunt newEmp) throws ResourceAlreadyExistsException {
-        if(empruntRepository.existsById(newEmp.getIDEMPRUNT())){
-            throw new ResourceAlreadyExistsException("Emprunt",newEmp.getIDEMPRUNT());
+        if(empruntRepository.existsById(newEmp.getId())){
+            throw new ResourceAlreadyExistsException("Emprunt",newEmp.getId());
         }
         else {
             return empruntRepository.save(newEmp);

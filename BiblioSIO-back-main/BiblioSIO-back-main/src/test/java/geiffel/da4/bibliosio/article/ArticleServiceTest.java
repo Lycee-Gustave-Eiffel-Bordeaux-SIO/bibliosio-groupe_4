@@ -1,8 +1,8 @@
 package geiffel.da4.bibliosio.article;
 
 
-import geiffel.da4.bibliosio.exceptions.ResourceAlreadyExistsException;
-import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
+import exceptions.ResourceAlreadyExistsException;
+import exceptions.ResourceNotFoundException;
 import geiffel.da4.bibliosio.exemplaire.Exemplaire;
 import geiffel.da4.bibliosio.revue.Revue;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 public class ArticleServiceTest 
 {
     @Autowired
-    private ArticleService articleService;
+    private ArticleJPAService articleJPAService;
 
     @MockBean
     private ArticleRepository articleRepository;
@@ -73,7 +73,7 @@ public class ArticleServiceTest
     void whenGettingAll_shouldReturn3()
     {
         when(articleRepository.findAll()).thenReturn(articles);
-        assertEquals(3, articleService.getAll().size());
+        assertEquals(3, articleJPAService.getAll().size());
     }
 
     @Test
@@ -85,10 +85,10 @@ public class ArticleServiceTest
         when(articleRepository.findById(4L)).thenReturn(Optional.empty());
 
         assertAll(
-                () -> assertEquals(articles.get(0), articleService.getById(1L)),
-                () -> assertEquals(articles.get(2), articleService.getById(3L)),
-                () -> assertThrows(ResourceNotFoundException.class, () -> articleService.getById(12L)),
-                () -> assertThrows(ResourceNotFoundException.class, () -> articleService.getById(4L))
+                () -> assertEquals(articles.get(0), articleJPAService.getById(1L)),
+                () -> assertEquals(articles.get(2), articleJPAService.getById(3L)),
+                () -> assertThrows(ResourceNotFoundException.class, () -> articleJPAService.getById(12L)),
+                () -> assertThrows(ResourceNotFoundException.class, () -> articleJPAService.getById(4L))
         );
     }
 
@@ -99,7 +99,7 @@ public class ArticleServiceTest
 
         when(articleRepository.save(any(Article.class))).thenReturn(newArticle);
 
-        assertEquals(newArticle, articleService.create(newArticle));
+        assertEquals(newArticle, articleJPAService.create(newArticle));
     }
 
     @Test
@@ -109,7 +109,7 @@ public class ArticleServiceTest
 
         doThrow(ResourceAlreadyExistsException.class).when(articleRepository).existsById(same_article.getId());
 
-        assertThrows(ResourceAlreadyExistsException.class, ()->articleService.create(same_article));
+        assertThrows(ResourceAlreadyExistsException.class, ()->articleJPAService.create(same_article));
     }
 
     @Test
@@ -121,7 +121,7 @@ public class ArticleServiceTest
         when(articleRepository.existsById(article.getId())).thenReturn(true);
         when(articleRepository.save(any(Article.class))).thenReturn(article);
 
-        assertEquals(article, articleService.update(article.getId(), article));
+        assertEquals(article, articleJPAService.update(article.getId(), article));
     }
 
     @Test
@@ -131,7 +131,7 @@ public class ArticleServiceTest
 
         when(articleRepository.exists(Example.of(article))).thenReturn(false);
 
-        assertThrows(ResourceNotFoundException.class, ()->articleService.update(75L, article));
+        assertThrows(ResourceNotFoundException.class, ()->articleJPAService.update(75L, article));
     }
 
     @Test
@@ -142,9 +142,9 @@ public class ArticleServiceTest
 
         when(articleRepository.existsById(article.getId())).thenReturn(true);
 
-        articleService.delete(id);
+        articleJPAService.delete(id);
 
-        assertFalse(articleService.getAll().contains(article));
+        assertFalse(articleJPAService.getAll().contains(article));
     }
 
     @Test
@@ -154,6 +154,6 @@ public class ArticleServiceTest
 
         doThrow(ResourceNotFoundException.class).when(articleRepository).delete(any());
 
-        assertThrows(ResourceNotFoundException.class, ()->articleService.delete(id));
+        assertThrows(ResourceNotFoundException.class, ()->articleJPAService.delete(id));
     }
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {Exemplaire} from "../../Exemplaire/Exemplaire";
-import {ExemplaireService} from "../../Exemplaire/exemplaire.service";
+import {Exemplaire} from "../Exemplaire";
+import {ExemplaireService} from "../exemplaire.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -9,15 +9,39 @@ import {Router} from "@angular/router";
   styleUrls: ['./exemplaire-list.component.css']
 })
 export class ExemplaireListComponent {
-  exemplaires: Exemplaire[]
+  exemplaires!: Exemplaire[];
+  selectedExemplaire!: Exemplaire;
 
   constructor(
       private exemplaireService: ExemplaireService,
       private router: Router
   ) {
-    this.exemplaires = []
-    exemplaireService.get()
-        .subscribe((exemplaires)=>this.exemplaires=exemplaires)
+    this.getAllExemplaires();
+  }
+
+  public getAllExemplaires(){
+    this.exemplaireService.getAllExemplaires().subscribe((value) => {
+      this.exemplaires = value;
+    });
+  }
+
+  public getExemplaireById(id: number) {
+    this.exemplaireService.getExemplaireById(id).subscribe((value) => {
+      this.selectedExemplaire = value;
+    })
+  }
+
+  public updateExemplaire(exemplaire: Exemplaire) {
+    this.exemplaireService.updateExemplaire(exemplaire).subscribe();
+
+  }
+
+  public deleteExemplaire(exemplaire: Exemplaire) {
+    this.exemplaireService.deleteExemplaire(exemplaire).subscribe();
+  }
+
+  public createExemplaire(exemplaire: Exemplaire) {
+    this.exemplaireService.createExemplaire(exemplaire).subscribe();
   }
 
   openExemplaireDetails(exemplaire: Exemplaire) {
@@ -28,5 +52,11 @@ export class ExemplaireListComponent {
   openCreateExemplaire() {
     this.router.navigate(['/exemplaires/edit'],
         {state: {creating: true}})
+  }
+
+  sortNum() {
+    this.exemplaires.sort(function (a: any, b: any) {
+      return a.id - b.id;
+    });
   }
 }

@@ -11,8 +11,8 @@ public class ExemplaireJSONSerializer extends JsonSerializer<Exemplaire> {
     @Override
     public void serialize(Exemplaire exemplaire, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         gen.writeStartObject();
-        gen.writeStringField("titre",exemplaire.getTITREEX());
-        gen.writeStringField("url", "/exemplaires/"+exemplaire.getIDEX());
+        gen.writeStringField("titre",exemplaire.getTitre());
+        gen.writeStringField("url", "/exemplaires/"+exemplaire.getId());
         gen.writeEndObject();
     }
 }

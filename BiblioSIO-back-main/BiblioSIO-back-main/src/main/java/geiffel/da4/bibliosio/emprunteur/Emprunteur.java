@@ -4,67 +4,64 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.util.Objects;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "NUMEROEMP")
 public class Emprunteur {
 
     @Id
-    @JsonProperty
-    private Long NUMEROEMP;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private String NOMEMP;
+    private String nomEmprunteur;
 
-    private String PRENOMEMP;
+    private String prenomEmprunteur;
 
-    private String MAILEMP;
+    private String mailEmprunteur;
 
     public Emprunteur(){}
 
-    public Emprunteur(Long num, String nom, String prenom, String mail){
-        this.NUMEROEMP=num;
-        this.NOMEMP=nom;
-        this.PRENOMEMP=prenom;
-        this.MAILEMP=mail;
+    public Emprunteur(Long id, String nomEmprunteur, String prenomEmprunteur, String mailEmprunteur) {
+        this.id = id;
+        this.nomEmprunteur = nomEmprunteur;
+        this.prenomEmprunteur = prenomEmprunteur;
+        this.mailEmprunteur = mailEmprunteur;
     }
 
-    public Long getNUMEROEMP() {
-        return NUMEROEMP;
+    public Long getId() {
+        return id;
     }
 
-    public void setNUMEROEMP(Long NUMEROEMP) {
-        this.NUMEROEMP = NUMEROEMP;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getNOMEMP() {
-        return NOMEMP;
+    public String getNomEmprunteur() {
+        return nomEmprunteur;
     }
 
-    public void setNOMEMP(String NOMEMP) {
-        this.NOMEMP = NOMEMP;
+    public void setNomEmprunteur(String nomEmprunteur) {
+        this.nomEmprunteur = nomEmprunteur;
     }
 
-    public String getPRENOMEMP() {
-        return PRENOMEMP;
+    public String getPrenomEmprunteur() {
+        return prenomEmprunteur;
     }
 
-    public void setPRENOMEMP(String PRENOMEMP) {
-        this.PRENOMEMP = PRENOMEMP;
+    public void setPrenomEmprunteur(String prenomEmprunteur) {
+        this.prenomEmprunteur = prenomEmprunteur;
     }
 
-    public String getMAILEMP() {
-        return MAILEMP;
+    public String getMailEmprunteur() {
+        return mailEmprunteur;
     }
 
-    public void setMAILEMP(String MAILEMP) {
-        this.MAILEMP = MAILEMP;
-    }
-
-    public String getNOMPRENOM(){
-        return this.NOMEMP +" "+ this.PRENOMEMP;
+    public void setMailEmprunteur(String mailEmprunteur) {
+        this.mailEmprunteur = mailEmprunteur;
     }
 
     @Override
@@ -72,7 +69,11 @@ public class Emprunteur {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Emprunteur that = (Emprunteur) o;
-        return Objects.equals(NUMEROEMP, that.NUMEROEMP) && Objects.equals(NOMEMP, that.NOMEMP) && Objects.equals(PRENOMEMP, that.PRENOMEMP) && Objects.equals(MAILEMP, that.MAILEMP);
+        return Objects.equals(id, that.id) && Objects.equals(nomEmprunteur, that.nomEmprunteur) && Objects.equals(prenomEmprunteur, that.prenomEmprunteur) && Objects.equals(mailEmprunteur, that.mailEmprunteur);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nomEmprunteur, prenomEmprunteur, mailEmprunteur);
+    }
 }

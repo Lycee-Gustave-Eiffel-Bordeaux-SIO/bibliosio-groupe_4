@@ -1,10 +1,9 @@
 package geiffel.da4.bibliosio.exemplaire;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import geiffel.da4.bibliosio.emprunteur.Emprunteur;
-import geiffel.da4.bibliosio.exceptions.ExceptionHandlingAdvice;
-import geiffel.da4.bibliosio.exceptions.ResourceAlreadyExistsException;
-import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
+import exceptions.ExceptionHandlingAdvice;
+import exceptions.ResourceAlreadyExistsException;
+import exceptions.ResourceNotFoundException;
 import geiffel.da4.bibliosio.revue.Revue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -107,7 +106,7 @@ public class ExemplaireControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(new_ex))
         ).andExpect(status().isCreated()
-        ).andExpect(header().string("Location", "/exemplaires/"+new_ex.getIDEX())
+        ).andExpect(header().string("Location", "/exemplaires/"+new_ex.getId())
         ).andDo(print());
 
         verify(exemplaireService).create(ex_received.capture());
@@ -128,10 +127,10 @@ public class ExemplaireControllerTest {
     void whenUpdating_shouldReceiveEmprunteurToUpdate_andReturnNoContent() throws Exception {
         Revue revue = new Revue(4L,"titre");
         Exemplaire initial_ex = exemplaires.get(1);
-        Exemplaire updated_ex = new Exemplaire(initial_ex.getIDEX(), "updated","updated", "updated",revue);
+        Exemplaire updated_ex = new Exemplaire(initial_ex.getId(), "updated","updated", "updated",revue);
         ArgumentCaptor<Exemplaire> ex_received = ArgumentCaptor.forClass(Exemplaire.class);
 
-        mockMvc.perform(put("/exemplaires/"+initial_ex.getIDEX())
+        mockMvc.perform(put("/exemplaires/"+initial_ex.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(updated_ex))
         ).andExpect(status().isNoContent());

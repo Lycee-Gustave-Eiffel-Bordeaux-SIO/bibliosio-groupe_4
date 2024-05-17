@@ -1,7 +1,7 @@
 package geiffel.da4.bibliosio.emprunteur;
 
-import geiffel.da4.bibliosio.exceptions.ResourceAlreadyExistsException;
-import geiffel.da4.bibliosio.exceptions.ResourceNotFoundException;
+import exceptions.ResourceAlreadyExistsException;
+import exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +67,7 @@ public class EmprunteurServiceTest {
         Emprunteur emprunteur = new Emprunteur(5L , "nom", "prenom", "mail");
         Emprunteur emprunteur1 = new Emprunteur(3L,"nom", "prenom", "mail");
         when(emprunteurRepository.save(any(Emprunteur.class))).thenReturn(emprunteur);
-        when(emprunteurRepository.existsById(emprunteur1.getNUMEROEMP())).thenReturn(true);
+        when(emprunteurRepository.existsById(emprunteur1.getId())).thenReturn(true);
         assertAll(
                 ()-> assertEquals(emprunteur, emprunteurService.create(emprunteur)),
                 ()-> assertThrows(ResourceAlreadyExistsException.class, ()-> emprunteurService.create(emprunteur1))
@@ -78,28 +78,28 @@ public class EmprunteurServiceTest {
     @Test
     void testUpdate(){
         Emprunteur emprunteur = emprunteurs.get(0);
-        emprunteur.setNOMEMP("nouveauNom");
+        emprunteur.setNomEmprunteur("nouveauNom");
 
-        when(emprunteurRepository.existsById(emprunteur.getNUMEROEMP())).thenReturn(true);
+        when(emprunteurRepository.existsById(emprunteur.getId())).thenReturn(true);
         when(emprunteurRepository.save(any(Emprunteur.class))).thenReturn(emprunteur);
 
-        assertEquals(emprunteur, emprunteurService.update(emprunteur.getNUMEROEMP(), emprunteur));
+        assertEquals(emprunteur, emprunteurService.update(emprunteur.getId(), emprunteur));
     }
 
     @Test
     void testUpdateError(){
         Emprunteur emprunteur = new Emprunteur(5L , "nom", "prenom", "mail");
-        emprunteur.setNUMEROEMP(3L);
+        emprunteur.setId(3L);
         when(emprunteurRepository.exists(Example.of(emprunteur))).thenReturn(false);
-        assertThrows(ResourceNotFoundException.class, () -> emprunteurService.update(emprunteur.getNUMEROEMP(), emprunteur));
+        assertThrows(ResourceNotFoundException.class, () -> emprunteurService.update(emprunteur.getId(), emprunteur));
     }
 
     @Test
     void testDelete(){
         Emprunteur toDelete = emprunteurs.get(0);
-        when(emprunteurRepository.existsById(toDelete.getNUMEROEMP())).thenReturn(true);
-        emprunteurService.delete(toDelete.getNUMEROEMP());
-        verify(emprunteurRepository).deleteById(toDelete.getNUMEROEMP());
+        when(emprunteurRepository.existsById(toDelete.getId())).thenReturn(true);
+        emprunteurService.delete(toDelete.getId());
+        verify(emprunteurRepository).deleteById(toDelete.getId());
     }
 
     @Test
@@ -107,7 +107,7 @@ public class EmprunteurServiceTest {
         Emprunteur toDelete = new Emprunteur(51L , "nom", "prenom", "mail");
         doThrow(ResourceNotFoundException.class).when(emprunteurRepository).deleteById(any());
 
-        assertThrows(ResourceNotFoundException.class, () -> emprunteurService.delete(toDelete.getNUMEROEMP()));
+        assertThrows(ResourceNotFoundException.class, () -> emprunteurService.delete(toDelete.getId()));
     }
     
 }
