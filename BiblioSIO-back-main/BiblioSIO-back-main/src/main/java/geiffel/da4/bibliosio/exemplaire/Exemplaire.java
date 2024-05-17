@@ -1,14 +1,9 @@
 package geiffel.da4.bibliosio.exemplaire;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import geiffel.da4.bibliosio.article.Article;
 import geiffel.da4.bibliosio.revue.Revue;
 import jakarta.persistence.*;
 
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class Exemplaire {

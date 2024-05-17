@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Qualifier("jpa")
+@Qualifier("jpaEmprunts")
 public class EmpruntJPAService implements EmpruntService{
 
     @Autowired

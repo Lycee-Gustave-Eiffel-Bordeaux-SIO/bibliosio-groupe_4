@@ -62,9 +62,9 @@ public class ArticleControllerTest
 
         exemplaires = new ArrayList<>()
         {{
-            add(new Exemplaire(1L,"titre1", "Décembre", "disponible", revues.get(0)));
-            add(new Exemplaire(2L,"titre2", "Janvier", "disponible", revues.get(1)));
-            add(new Exemplaire(3L,"titre3", "Février", "disponible", revues.get(2)));
+            add(new Exemplaire(1L,"titre1", "2024", "Octobre",null, revues.get(0)));
+            add(new Exemplaire(2L,"titre2", null, "Octobre/Décembre",null, revues.get(1)));
+            add(new Exemplaire(3L,"titre3", "2019", null,null, revues.get(2)));
         }};
 
         articles = new ArrayList<>()

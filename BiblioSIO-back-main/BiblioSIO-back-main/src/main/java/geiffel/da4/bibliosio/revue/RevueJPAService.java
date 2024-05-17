@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Qualifier("jpaRevue")
+@Qualifier("jpaRevues")
 public class RevueJPAService implements RevueService
 {
     @Autowired

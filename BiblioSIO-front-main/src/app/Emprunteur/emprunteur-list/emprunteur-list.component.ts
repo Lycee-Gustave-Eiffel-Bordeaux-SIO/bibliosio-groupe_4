@@ -19,7 +19,6 @@ export class EmprunteurListComponent {
     private router: Router
   ) {
     this.ClasseArray = Object.values(Classe);
-    this.classeSelectionnee = this.ClasseArray[0];
     this.getAllEmprunteurs();
   }
 

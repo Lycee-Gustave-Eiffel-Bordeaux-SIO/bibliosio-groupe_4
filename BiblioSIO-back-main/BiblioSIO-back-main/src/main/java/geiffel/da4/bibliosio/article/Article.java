@@ -1,6 +1,5 @@
 package geiffel.da4.bibliosio.article;
 
-
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import geiffel.da4.bibliosio.exemplaire.Exemplaire;
 import geiffel.da4.bibliosio.exemplaire.ExemplaireJSONSerializer;
@@ -45,8 +44,6 @@ public class Article
         this.revue = revue;
         this.exemplaire = exemplaire;
     }
-
-
 
     // Getters - Setters
 

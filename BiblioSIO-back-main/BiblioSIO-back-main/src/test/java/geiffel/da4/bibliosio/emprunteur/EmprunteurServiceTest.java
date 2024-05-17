@@ -35,9 +35,9 @@ public class EmprunteurServiceTest {
     @BeforeEach
     void setUp() {
         emprunteurs = new ArrayList<>(){{
-            add(new Emprunteur(1L,"Rouzeau","Paul","paulR@gmail.com"));
-            add(new Emprunteur(2L,"Larrieu","Joseph","josephL@gmail.com"));
-            add(new Emprunteur(3L,"Oriot","Maxime","maximeO@gmail.com"));
+            add(new Emprunteur(1L,"Rouzeau","Paul","paulR@gmail.com",null,null));
+            add(new Emprunteur(2L,"Larrieu","Joseph","josephL@gmail.com",null,null));
+            add(new Emprunteur(3L,"Oriot","Maxime","maximeO@gmail.com",null,null));
         }};
         Emprunteur emprunteur =emprunteurs.get(0);
         when(emprunteurRepository.findById(1L)).thenReturn(Optional.of(emprunteur));
@@ -64,8 +64,8 @@ public class EmprunteurServiceTest {
 
     @Test
     void testCreation(){
-        Emprunteur emprunteur = new Emprunteur(5L , "nom", "prenom", "mail");
-        Emprunteur emprunteur1 = new Emprunteur(3L,"nom", "prenom", "mail");
+        Emprunteur emprunteur = new Emprunteur(5L , "nom", "prenom", "mail",null,null);
+        Emprunteur emprunteur1 = new Emprunteur(3L,"nom", "prenom", "mail",null,null);
         when(emprunteurRepository.save(any(Emprunteur.class))).thenReturn(emprunteur);
         when(emprunteurRepository.existsById(emprunteur1.getId())).thenReturn(true);
         assertAll(
@@ -88,7 +88,7 @@ public class EmprunteurServiceTest {
 
     @Test
     void testUpdateError(){
-        Emprunteur emprunteur = new Emprunteur(5L , "nom", "prenom", "mail");
+        Emprunteur emprunteur = new Emprunteur(5L , "nom", "prenom", "mail",null,null);
         emprunteur.setId(3L);
         when(emprunteurRepository.exists(Example.of(emprunteur))).thenReturn(false);
         assertThrows(ResourceNotFoundException.class, () -> emprunteurService.update(emprunteur.getId(), emprunteur));
@@ -104,7 +104,7 @@ public class EmprunteurServiceTest {
 
     @Test
     void testDeleteError(){
-        Emprunteur toDelete = new Emprunteur(51L , "nom", "prenom", "mail");
+        Emprunteur toDelete = new Emprunteur(51L , "nom", "prenom", "mail",null,null);
         doThrow(ResourceNotFoundException.class).when(emprunteurRepository).deleteById(any());
 
         assertThrows(ResourceNotFoundException.class, () -> emprunteurService.delete(toDelete.getId()));

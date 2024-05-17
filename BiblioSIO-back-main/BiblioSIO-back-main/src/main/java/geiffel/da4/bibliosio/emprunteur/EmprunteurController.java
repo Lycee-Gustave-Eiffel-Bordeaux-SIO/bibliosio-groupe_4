@@ -13,10 +13,10 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class EmprunteurController {
 
-    private EmprunteurService emprunteurService;
+    private final EmprunteurService emprunteurService;
 
     @Autowired
-    public EmprunteurController(@Qualifier("jpa") EmprunteurService emprunteurService) {
+    public EmprunteurController(@Qualifier("jpaEmprunteurs") EmprunteurService emprunteurService) {
         this.emprunteurService=emprunteurService;
     }
 

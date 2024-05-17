@@ -1,7 +1,7 @@
 package geiffel.da4.bibliosio.emprunt;
 
-import geiffel.da4.bibliosio.emprunteur.Emprunteur;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +13,9 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class EmpruntController {
 
-    private EmpruntService empruntService;
+    private final EmpruntService empruntService;
     @Autowired
-    public EmpruntController(EmpruntService empruntService) {
+    public EmpruntController(@Qualifier("jpaEmprunts")EmpruntService empruntService) {
         this.empruntService = empruntService;
     }
 

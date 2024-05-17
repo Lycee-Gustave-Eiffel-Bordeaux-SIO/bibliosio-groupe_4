@@ -51,12 +51,12 @@ public class EmprunteurControllerTest {
     @BeforeEach
     void setUp() {
         emprunteurs= new ArrayList<>(){{
-            add(new Emprunteur(1L,"Rouzeau","Paul","paulR@gmail.com"));
-            add(new Emprunteur(2L,"Larrieu","Joseph","josephL@gmail.com"));
-            add(new Emprunteur(3L,"Oriot","Maxime","maximeO@gmail.com"));
-            add(new Emprunteur(14L,"Garrido","Fernand","FernandG@gmail.com"));
-            add(new Emprunteur(7L,"Jobs","Steve","SteveJ@gmail.com"));
-            add(new Emprunteur(28L,"Benzema","Karim","KarimB@gmail.com"));
+            add(new Emprunteur(1L,"Rouzeau","Paul","paulR@gmail.com",null,null));
+            add(new Emprunteur(2L,"Larrieu","Joseph","josephL@gmail.com",null,null));
+            add(new Emprunteur(3L,"Oriot","Maxime","maximeO@gmail.com",null,null));
+            add(new Emprunteur(14L,"Garrido","Fernand","FernandG@gmail.com",null,null));
+            add(new Emprunteur(7L,"Jobs","Steve","SteveJ@gmail.com",null,null));
+            add(new Emprunteur(28L,"Benzema","Karim","KarimB@gmail.com",null,null));
         }};
         when(emprunteurService.getAll()).thenReturn(emprunteurs);
         when(emprunteurService.getById(7L)).thenReturn(emprunteurs.get(4));
@@ -94,7 +94,7 @@ public class EmprunteurControllerTest {
 
     @Test
     void whenCreatingNew_shouldReturnLink_andShouldBeStatusCreated() throws Exception {
-        Emprunteur new_emp = new Emprunteur(89L, "test", "test","test");
+        Emprunteur new_emp = new Emprunteur(89L, "test", "test","test",null,null);
         ArgumentCaptor<Emprunteur> emp_received = ArgumentCaptor.forClass(Emprunteur.class);
         when(emprunteurService.create(any())).thenReturn(new_emp);
 
@@ -122,7 +122,7 @@ public class EmprunteurControllerTest {
     @Test
     void whenUpdating_shouldReceiveEmprunteurToUpdate_andReturnNoContent() throws Exception {
         Emprunteur initial_emp = emprunteurs.get(1);
-        Emprunteur updated_emp = new Emprunteur(initial_emp.getId(), "updated","updated", "updated");
+        Emprunteur updated_emp = new Emprunteur(initial_emp.getId(), "updated","updated", "updated",null,null);
         ArgumentCaptor<Emprunteur> emp_received = ArgumentCaptor.forClass(Emprunteur.class);
 
         mockMvc.perform(put("/emprunteurs/"+initial_emp.getId())

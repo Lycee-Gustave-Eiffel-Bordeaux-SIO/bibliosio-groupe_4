@@ -43,7 +43,7 @@ public class EmpruntControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    @MockBean(name = "jpa")
+    @MockBean(name = "jpaEmprunts")
     EmpruntService empruntService;
 
     private List<Emprunt> emprunts;
@@ -62,12 +62,12 @@ public class EmpruntControllerTest {
         Mockito.when(ex2.getId()).thenReturn(2L);
 
         emprunts = new ArrayList<>(){{
-            add(new Emprunt(1L,"01/01/2023","11/01/2023","statut1",emprunteur1,ex1));
-            add(new Emprunt(2L,"02/02/2023","12/02/2023","statut2",emprunteur2,ex2));
-            add(new Emprunt(3L,"03/03/2023","13/03/2023","statut3",emprunteur1,ex2));
-            add(new Emprunt(14L,"04/04/2023","14/04/2023","statut4",emprunteur1,ex1));
-            add(new Emprunt(7L,"05/05/2023","15/05/2023","statut5",emprunteur2,ex2));
-            add(new Emprunt(28L,"06/06/2023","16/06/2023","statut6",emprunteur2,ex1));
+            add(new Emprunt(1L,"01/01/2023","11/01/2023","statut1",emprunteur1,ex1, null));
+            add(new Emprunt(2L,"02/02/2023","12/02/2023","statut2",emprunteur2,ex2, null));
+            add(new Emprunt(3L,"03/03/2023","13/03/2023","statut3",emprunteur1,ex2, null));
+            add(new Emprunt(14L,"04/04/2023","14/04/2023","statut4",emprunteur1,ex1, null));
+            add(new Emprunt(7L,"05/05/2023","15/05/2023","statut5",emprunteur2,ex2, null));
+            add(new Emprunt(28L,"06/06/2023","16/06/2023","statut6",emprunteur2,ex1, null));
         }};
         when(empruntService.getAll()).thenReturn(emprunts);
         when(empruntService.getById(7L)).thenReturn(emprunts.get(4));
@@ -105,7 +105,7 @@ public class EmpruntControllerTest {
 
     @Test
     void whenCreatingNew_shouldReturnLink_andShouldBeStatusCreated() throws Exception {
-        Emprunt new_emp = new Emprunt(89L , "dated", "datef","statut", emprunteur1,ex1);
+        Emprunt new_emp = new Emprunt(89L , "dated", "datef","statut", emprunteur1,ex1,null);
         ArgumentCaptor<Emprunt> emp_received = ArgumentCaptor.forClass(Emprunt.class);
         when(empruntService.create(any())).thenReturn(new_emp);
 
@@ -133,7 +133,7 @@ public class EmpruntControllerTest {
     @Test
     void whenUpdating_shouldReceiveEmprunteurToUpdate_andReturnNoContent() throws Exception {
         Emprunt initial_emp = emprunts.get(1);
-        Emprunt updated_emp = new Emprunt(initial_emp.getId() , "dated", "datef","statut", emprunteur1,ex1);
+        Emprunt updated_emp = new Emprunt(initial_emp.getId() , "dated", "datef","statut", emprunteur1,ex1,null);
         ArgumentCaptor<Emprunt> emp_received = ArgumentCaptor.forClass(Emprunt.class);
 
         mockMvc.perform(put("/emprunts/"+initial_emp.getId())

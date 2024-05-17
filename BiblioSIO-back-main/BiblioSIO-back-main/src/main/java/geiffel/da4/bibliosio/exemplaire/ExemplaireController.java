@@ -1,6 +1,5 @@
 package geiffel.da4.bibliosio.exemplaire;
 
-import geiffel.da4.bibliosio.emprunteur.Emprunteur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +13,10 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class ExemplaireController {
 
-    private ExemplaireService exemplaireService;
+    private final ExemplaireService exemplaireService;
 
     @Autowired
-    public ExemplaireController(@Qualifier("jpa") ExemplaireService exemplaireService) {
+    public ExemplaireController(@Qualifier("jpaExemplaires") ExemplaireService exemplaireService) {
         this.exemplaireService=exemplaireService;
     }
 

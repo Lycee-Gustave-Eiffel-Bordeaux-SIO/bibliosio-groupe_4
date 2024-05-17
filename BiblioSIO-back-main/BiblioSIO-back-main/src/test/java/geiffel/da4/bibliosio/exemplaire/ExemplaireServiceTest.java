@@ -39,9 +39,9 @@ public class ExemplaireServiceTest {
         Revue revue1 = new Revue(1L,"revue1");
         Revue revue2 = new Revue(2L,"revue2");
         exemplaires = new ArrayList<>(){{
-            add(new Exemplaire(1L,"titre1","01/01/2023","statut1",revue1));
-            add(new Exemplaire(2L,"titre2","02/02/2023","statut2",revue1));
-            add(new Exemplaire(3L,"titre3","03/03/2023","statut3",revue2));
+            add(new Exemplaire(1L,"titre1","01/01/2023","statut1",null,revue1));
+            add(new Exemplaire(2L,"titre2","02/02/2023","statut2",null,revue1));
+            add(new Exemplaire(3L,"titre3","03/03/2023","statut3",null,revue2));
 
         }};
         Exemplaire exemplaire =exemplaires.get(0);
@@ -69,8 +69,8 @@ public class ExemplaireServiceTest {
     @Test
     void testCreation(){
         Revue revue = new Revue(3L,"titre");
-        Exemplaire exemplaire = new Exemplaire(5L , "Titre1", "novembre 2010","statut", revue);
-        Exemplaire exemplaire1 = new Exemplaire(3L , "Titre1", "novembre 2010","statut", revue);
+        Exemplaire exemplaire = new Exemplaire(5L , "Titre1", "novembre 2010","statut",null, revue);
+        Exemplaire exemplaire1 = new Exemplaire(3L , "Titre1", "novembre 2010","statut",null, revue);
         when(exemplaireRepository.save(any(Exemplaire.class))).thenReturn(exemplaire);
         when(exemplaireRepository.existsById(exemplaire1.getId())).thenReturn(true);
         assertAll(
@@ -95,7 +95,7 @@ public class ExemplaireServiceTest {
     @Test
     void testUpdateError(){
         Revue revue = new Revue(3L,"titre");
-        Exemplaire exemplaire = new Exemplaire(5L , "Titre1", "novembre 2010","statut", revue);
+        Exemplaire exemplaire = new Exemplaire(5L , "Titre1", "novembre 2010","statut", null,revue);
         exemplaire.setId(3L);
         when(exemplaireRepository.exists(Example.of(exemplaire))).thenReturn(false);
         assertThrows(ResourceNotFoundException.class, () -> exemplaireService.update(exemplaire.getId(), exemplaire));
@@ -112,7 +112,7 @@ public class ExemplaireServiceTest {
     @Test
     void testDeleteError(){
         Revue revue = new Revue(3L,"titre");
-        Exemplaire toDelete = new Exemplaire(51L , "Titre1", "novembre 2010","statut", revue);
+        Exemplaire toDelete = new Exemplaire(51L , "Titre1", "novembre 2010","statut", null,revue);
         doThrow(ResourceNotFoundException.class).when(exemplaireRepository).deleteById(any());
 
         assertThrows(ResourceNotFoundException.class, () -> exemplaireService.delete(toDelete.getId()));

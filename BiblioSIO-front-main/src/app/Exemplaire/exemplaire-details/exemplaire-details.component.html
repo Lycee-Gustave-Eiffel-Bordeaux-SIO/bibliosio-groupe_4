@@ -2,11 +2,9 @@
 <article>
   <div class="entity">
     <p style="font-weight: bold; text-align: center">{{exemplaire.titre}}</p>
-    <details>
-      <a (click)="this.gotoRevue(exemplaire.revue?.id)">{{exemplaire.revue?.titre}}</a>
-      <p>{{exemplaire.moisParution}}</p>
-      <p>{{exemplaire.anneeParution}}</p>
-    </details>
+    <a (click)="this.gotoRevue(exemplaire.revue?.id)">{{exemplaire.revue?.titre}}</a>
+    <p>{{exemplaire.moisParution}}</p>
+    <p>{{exemplaire.anneeParution}}</p>
     <p>{{statut()}}</p>
   </div>
   <div class="controls">

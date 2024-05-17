@@ -15,23 +15,24 @@ import {ArticleDetailsComponent} from "./Article/article-details/article-details
 import {EmpruntEditorComponent} from "./Emprunt/emprunt-editor/emprunt-editor.component";
 import {EmpruntDetailsComponent} from "./Emprunt/emprunt-details/emprunt-details.component";
 import {EmpruntListComponent} from "./Emprunt/emprunt-list/emprunt-list.component";
+import {AppComponent} from "./app.component";
 
-const routes: Routes = [
-  { path: 'emprunteurs', component: EmprunteurListComponent },
-  { path: 'emprunteurs/edit', component: EmprunteurEditorComponent },
-  { path: 'emprunteurs/:id', component: EmprunteurDetailsComponent },
-  { path: 'revues', component: RevueListComponent },
-  { path: 'revues/edit', component: RevueEditorComponent },
-  { path: 'revues/:id', component: RevueDetailsComponent },
-  { path: 'exemplaires', component: ExemplaireListComponent },
-  { path: 'exemplaires/edit', component: ExemplaireEditorComponent },
-  { path: 'exemplaires/:id', component: ExemplaireDetailsComponent },
-  { path: 'articles', component: ArticleListComponent },
-  { path: 'articles/edit', component: ArticleEditorComponent },
-  { path: 'articles/:id', component: ArticleDetailsComponent },
-  { path: 'emprunts', component: EmpruntListComponent },
-  { path: 'emprunts/edit', component: EmpruntEditorComponent },
-  { path: 'emprunts/:id', component: EmpruntDetailsComponent },
+export const routes: Routes = [
+  {path: 'emprunteurs', component: EmprunteurListComponent},
+  {path: 'emprunteurs/edit', component: EmprunteurEditorComponent},
+  {path: 'emprunteurs/:id', component: EmprunteurDetailsComponent},
+  {path: 'revues', component: RevueListComponent},
+  {path: 'revues/edit', component: RevueEditorComponent},
+  {path: 'revues/:id', component: RevueDetailsComponent},
+  {path: 'exemplaires', component: ExemplaireListComponent},
+  {path: 'exemplaires/edit', component: ExemplaireEditorComponent},
+  {path: 'exemplaires/:id', component: ExemplaireDetailsComponent},
+  {path: 'articles', component: ArticleListComponent},
+  {path: 'articles/edit', component: ArticleEditorComponent},
+  {path: 'articles/:id', component: ArticleDetailsComponent},
+  {path: 'emprunts', component: EmpruntListComponent},
+  {path: 'emprunts/edit', component: EmpruntEditorComponent},
+  {path: 'emprunts/:id', component: EmpruntDetailsComponent}
 ];
 @NgModule({
   declarations: [],

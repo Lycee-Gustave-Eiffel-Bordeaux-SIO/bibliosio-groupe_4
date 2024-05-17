@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 public class EmpruntServiceTest {
 
-    @Qualifier("jpa")
+    @Qualifier("jpaEmprunts")
     @Autowired
     private EmpruntService empruntService;
 
@@ -49,9 +49,9 @@ public class EmpruntServiceTest {
         Mockito.when(ex2.getId()).thenReturn(2L);
 
         emprunts = new ArrayList<>(){{
-            add(new Emprunt(1L,"01/01/2023","11/01/2023","statut1",emprunteur1,ex1));
-            add(new Emprunt(2L,"02/02/2023","12/02/2023","statut2",emprunteur2,ex2));
-            add(new Emprunt(3L,"03/03/2023","13/03/2023","statut3",emprunteur1,ex2));
+            add(new Emprunt(1L,"01/01/2023","11/01/2023","statut1",emprunteur1,ex1,null));
+            add(new Emprunt(2L,"02/02/2023","12/02/2023","statut2",emprunteur2,ex2,null));
+            add(new Emprunt(3L,"03/03/2023","13/03/2023","statut3",emprunteur1,ex2,null));
         }};
         Emprunt emprunt =emprunts.get(0);
         when(empruntRepository.findById(1L)).thenReturn(Optional.of(emprunt));
@@ -75,8 +75,8 @@ public class EmpruntServiceTest {
 
     @Test
     void testCreation(){
-        Emprunt emprunt = new Emprunt(5L , "dated", "datef","statut", emprunteur1,ex1);
-        Emprunt emprunt1 = new Emprunt(3L , "dated", "datef","statut", emprunteur1,ex1);
+        Emprunt emprunt = new Emprunt(5L , "dated", "datef","statut", emprunteur1,ex1,null);
+        Emprunt emprunt1 = new Emprunt(3L , "dated", "datef","statut", emprunteur1,ex1,null);
         when(empruntRepository.save(any(Emprunt.class))).thenReturn(emprunt);
         when(empruntRepository.existsById(emprunt1.getId())).thenReturn(true);
         assertAll(
@@ -98,7 +98,7 @@ public class EmpruntServiceTest {
 
     @Test
     void testUpdateError(){
-        Emprunt emprunt = new Emprunt(5L , "dated", "datef","statut", emprunteur1,ex1);
+        Emprunt emprunt = new Emprunt(5L , "dated", "datef","statut", emprunteur1,ex1,null);
         emprunt.setId(3L);
         when(empruntRepository.exists(Example.of(emprunt))).thenReturn(false);
         assertThrows(ResourceNotFoundException.class, () -> empruntService.update(emprunt.getId(), emprunt));
@@ -114,7 +114,7 @@ public class EmpruntServiceTest {
 
     @Test
     void testDeleteError(){
-        Emprunt toDelete = new Emprunt(51L , "dated", "datef","statut", emprunteur2,ex2);
+        Emprunt toDelete = new Emprunt(51L , "dated", "datef","statut", emprunteur2,ex2,null);
         doThrow(ResourceNotFoundException.class).when(empruntRepository).deleteById(any());
 
         assertThrows(ResourceNotFoundException.class, () -> empruntService.delete(toDelete.getId()));

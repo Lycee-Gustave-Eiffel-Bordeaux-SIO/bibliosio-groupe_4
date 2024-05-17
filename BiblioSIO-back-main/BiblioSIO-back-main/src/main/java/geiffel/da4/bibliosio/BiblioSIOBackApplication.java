@@ -10,6 +10,8 @@ import geiffel.da4.bibliosio.exemplaire.Exemplaire;
 import geiffel.da4.bibliosio.exemplaire.ExemplaireRepository;
 import geiffel.da4.bibliosio.revue.Revue;
 import geiffel.da4.bibliosio.revue.RevueRepository;
+import geiffel.da4.bibliosio.user.User;
+import geiffel.da4.bibliosio.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -36,6 +38,9 @@ public class BiblioSIOBackApplication {
     @Autowired
     private ExemplaireRepository exemplaireRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public static void main(String[] args){
         SpringApplication.run(BiblioSIOBackApplication.class, args);
     }
@@ -45,6 +50,14 @@ public class BiblioSIOBackApplication {
     {
         return (args) ->
         {
+            List<User> users = new ArrayList<>()
+            {{
+                add(new User(1L, "user", "user", "user"));
+                add(new User(2L, "admin", "admin", "admin"));
+            }};
+
+            userRepository.saveAll(users);
+
             List<Revue> revues = new ArrayList<>()
             {{
                 add(new Revue(1L, "Revue1"));
@@ -54,9 +67,9 @@ public class BiblioSIOBackApplication {
             revueRepository.saveAll(revues);
 
             List<Emprunteur> emprunteurs = new ArrayList<>(){{
-                add(new Emprunteur(1L, "nom1", "prénom1", "mail1"));
-                add(new Emprunteur(2L, "nom2", "prénom2", "mail2"));
-                add(new Emprunteur(3L, "nom3", "prénom3", "mail3"));
+                add(new Emprunteur(1L, "nom1", "prénom1", "mail1", "2024", "SIO1B"));
+                add(new Emprunteur(2L, "nom2", "prénom2", "mail2","2019", "SIO2B"));
+                add(new Emprunteur(3L, "nom3", "prénom3", "mail3","2018", "SIO1A"));
             }};
             emprunteurRepository.saveAll(emprunteurs);
 
@@ -75,9 +88,9 @@ public class BiblioSIOBackApplication {
             articleRepository.saveAll(articles);
 
             List<Emprunt> emprunts = new ArrayList<>(){{
-                add(new Emprunt(1L, null, null, null, emprunteurs.get(0), exemplaires.get(0)));
-                add(new Emprunt(2L, null, null, null, emprunteurs.get(1), exemplaires.get(1)));
-                add(new Emprunt(3L, null, null, null, emprunteurs.get(2), exemplaires.get(2)));
+                add(new Emprunt(1L, null, null, null, emprunteurs.get(0), exemplaires.get(0), null));
+                add(new Emprunt(2L, null, null, null, emprunteurs.get(1), exemplaires.get(1), null));
+                add(new Emprunt(3L, null, null, null, emprunteurs.get(2), exemplaires.get(2), null));
             }};
             empruntRepository.saveAll(emprunts);
 

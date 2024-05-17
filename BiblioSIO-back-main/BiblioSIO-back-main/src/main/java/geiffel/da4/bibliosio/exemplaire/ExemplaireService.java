@@ -2,9 +2,11 @@ package geiffel.da4.bibliosio.exemplaire;
 
 import exceptions.ResourceAlreadyExistsException;
 import exceptions.ResourceNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface ExemplaireService {
 
     List<Exemplaire> getAll();

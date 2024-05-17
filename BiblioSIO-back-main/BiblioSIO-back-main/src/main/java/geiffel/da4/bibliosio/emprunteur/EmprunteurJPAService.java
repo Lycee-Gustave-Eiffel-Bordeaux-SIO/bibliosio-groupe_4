@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Qualifier("jpa")
+@Qualifier("jpaEmprunteurs")
 public class EmprunteurJPAService implements EmprunteurService{
 
     @Autowired

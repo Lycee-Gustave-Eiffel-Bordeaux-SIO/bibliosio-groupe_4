@@ -1,8 +1,5 @@
 package geiffel.da4.bibliosio.emprunteur;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,13 +20,19 @@ public class Emprunteur {
 
     private String mailEmprunteur;
 
+    private String promo;
+
+    private String classe;
+
     public Emprunteur(){}
 
-    public Emprunteur(Long id, String nomEmprunteur, String prenomEmprunteur, String mailEmprunteur) {
+    public Emprunteur(Long id, String nomEmprunteur, String prenomEmprunteur, String mailEmprunteur, String promo, String classe) {
         this.id = id;
         this.nomEmprunteur = nomEmprunteur;
         this.prenomEmprunteur = prenomEmprunteur;
         this.mailEmprunteur = mailEmprunteur;
+        this.promo = promo;
+        this.classe = classe;
     }
 
     public Long getId() {
@@ -64,16 +67,32 @@ public class Emprunteur {
         this.mailEmprunteur = mailEmprunteur;
     }
 
+    public String getPromo() {
+        return promo;
+    }
+
+    public void setPromo(String promo) {
+        this.promo = promo;
+    }
+
+    public String getClasse() {
+        return classe;
+    }
+
+    public void setClasse(String classe) {
+        this.classe = classe;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Emprunteur that = (Emprunteur) o;
-        return Objects.equals(id, that.id) && Objects.equals(nomEmprunteur, that.nomEmprunteur) && Objects.equals(prenomEmprunteur, that.prenomEmprunteur) && Objects.equals(mailEmprunteur, that.mailEmprunteur);
+        return Objects.equals(id, that.id) && Objects.equals(nomEmprunteur, that.nomEmprunteur) && Objects.equals(prenomEmprunteur, that.prenomEmprunteur) && Objects.equals(mailEmprunteur, that.mailEmprunteur) && Objects.equals(promo, that.promo) && Objects.equals(classe, that.classe);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nomEmprunteur, prenomEmprunteur, mailEmprunteur);
+        return Objects.hash(id, nomEmprunteur, prenomEmprunteur, mailEmprunteur, promo, classe);
     }
 }

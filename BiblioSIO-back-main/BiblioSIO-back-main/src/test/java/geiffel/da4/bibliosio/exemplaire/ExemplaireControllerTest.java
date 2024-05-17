@@ -53,12 +53,12 @@ public class ExemplaireControllerTest {
         Revue revue2 = new Revue(2L,"revue2");
         Revue revue3 = new Revue(3L,"revue3");
         exemplaires= new ArrayList<>(){{
-            add(new Exemplaire(1L,"titre1","01/01/2023","statut1",revue1));
-            add(new Exemplaire(2L,"titre2","02/02/2023","statut2",revue1));
-            add(new Exemplaire(3L,"titre3","03/03/2023","statut3",revue2));
-            add(new Exemplaire(14L,"titre4","04/04/2023","statut4",revue3));
-            add(new Exemplaire(7L,"titre5","05/05/2023","statut5",revue3));
-            add(new Exemplaire(28L,"titre6","06/06/2023","statut6",revue3));
+            add(new Exemplaire(1L,"titre1","01/01/2023","statut1",null,revue1));
+            add(new Exemplaire(2L,"titre2","02/02/2023","statut2",null,revue1));
+            add(new Exemplaire(3L,"titre3","03/03/2023","statut3",null,revue2));
+            add(new Exemplaire(14L,"titre4","04/04/2023","statut4",null,revue3));
+            add(new Exemplaire(7L,"titre5","05/05/2023","statut5",null,revue3));
+            add(new Exemplaire(28L,"titre6","06/06/2023","statut6",null,revue3));
 
         }};
         when(exemplaireService.getAll()).thenReturn(exemplaires);
@@ -98,7 +98,7 @@ public class ExemplaireControllerTest {
     @Test
     void whenCreatingNew_shouldReturnLink_andShouldBeStatusCreated() throws Exception {
         Revue revue = new Revue(4L,"titre");
-        Exemplaire new_ex = new Exemplaire(89L, "test", "test","test",revue);
+        Exemplaire new_ex = new Exemplaire(89L, "test", "test","test",null,revue);
         ArgumentCaptor<Exemplaire> ex_received = ArgumentCaptor.forClass(Exemplaire.class);
         when(exemplaireService.create(any())).thenReturn(new_ex);
 
@@ -127,7 +127,7 @@ public class ExemplaireControllerTest {
     void whenUpdating_shouldReceiveEmprunteurToUpdate_andReturnNoContent() throws Exception {
         Revue revue = new Revue(4L,"titre");
         Exemplaire initial_ex = exemplaires.get(1);
-        Exemplaire updated_ex = new Exemplaire(initial_ex.getId(), "updated","updated", "updated",revue);
+        Exemplaire updated_ex = new Exemplaire(initial_ex.getId(), "updated","updated", "updated",null,revue);
         ArgumentCaptor<Exemplaire> ex_received = ArgumentCaptor.forClass(Exemplaire.class);
 
         mockMvc.perform(put("/exemplaires/"+initial_ex.getId())
